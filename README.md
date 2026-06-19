@@ -141,33 +141,6 @@ Maziyar-shop/
 ### Order
 - product, customer, quantity, address, phone, date, status
 
-## استقرار (Deployment)
-
-### Render (رایگان)
-1. کد را به GitHub push کنید
-2. در render.com یک Web Service بسازید
-3. Environment Variables:
-   - `DJANGO_SECRET_KEY`
-   - `DJANGO_DEBUG=False`
-   - `DJANGO_ALLOWED_HOSTS=maziyar-shop.onrender.com`
-   - `DATABASE_URL` (از PostgreSQL رایگان Render)
-
-### فایل‌های مورد نیاز استقرار
-- `requirements.txt` — وابستگی‌ها
-- `runtime.txt` — نسخه Python
-- `build.sh` — اسکریپت بیلد
-
 ## دسترسی پنل مدیریت
 
 فقط کاربران `is_staff` به پنل مدیریت دسترسی دارند.
-
-- آدرس پنل مدیریت: `/admin-panel/`
-- آدرس ادمین جنگو: `/admin/`
-
-## نویسنده
-
-**مازیار کلگری** — [@Thrymheim](https://github.com/Thrymheim)
-
-## لایسنس
-
-این پروژه برای استفاده شخصی و آموزشی است.
