@@ -89,7 +89,7 @@ python manage.py runserver
 
 ```
 Maziyar-shop/
-├── digikala/              # تنظیمات پروژه
+├── maziyar_shop/          # تنظیمات پروژه
 │   ├── settings.py
 │   ├── urls.py
 │   └── wsgi.py
