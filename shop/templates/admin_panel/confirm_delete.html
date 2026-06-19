@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}حذف - پنل مدیریت{% endblock %}
+{% block title %}{{ T.delete }} - {{ T.admin_panel_title }}{% endblock %}
 
 {% block content %}
 <div class="container py-4">
@@ -8,15 +8,13 @@
             <div class="card shadow-sm border-danger">
                 <div class="card-body text-center py-5">
                     <i class="bi bi-exclamation-triangle text-danger fs-1 mb-3"></i>
-                    <h4 class="fw-bold mb-3">آیا از حذف مطمئن هستید؟</h4>
+                    <h4 class="fw-bold mb-3">{{ T.confirm_delete }}</h4>
                     <p class="text-muted mb-4">{{ item_name }}</p>
                     <form method="POST" class="d-inline">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-danger btn-lg">
-                            <i class="bi bi-trash me-1"></i>بله، حذف شود
-                        </button>
+                        <button type="submit" class="btn btn-danger btn-lg"><i class="bi bi-trash me-1"></i>{{ T.delete }}</button>
                     </form>
-                    <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary btn-lg me-2">لغو</a>
+                    <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary btn-lg me-2">{{ T.cancel }}</a>
                 </div>
             </div>
         </div>

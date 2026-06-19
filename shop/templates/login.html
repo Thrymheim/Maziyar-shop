@@ -2,12 +2,11 @@
 
 {% block content %}
 
-<!-- Header-->
 <header class="bg-gradient-primary py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder fade-in-up">خوش آمدید</h1>
-            <p class="lead fw-normal text-white-50 mb-0">وارد حساب کاربری خود شوید</p>
+            <h1 class="display-4 fw-bolder fade-in-up">{{ T.welcome }}</h1>
+            <p class="lead fw-normal text-white-50 mb-0">{{ T.login_title }}</p>
         </div>
     </div>
 </header>
@@ -21,66 +20,50 @@
                         <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
                             <i class="bi bi-person-fill text-white" style="font-size: 1.5rem;"></i>
                         </div>
-                        <h3 class="fw-bold text-gradient">ورود به حساب کاربری</h3>
-                        <p class="text-muted">اطلاعات خود را وارد کنید</p>
+                        <h3 class="fw-bold text-gradient">{{ T.login_title }}</h3>
+                        <p class="text-muted">{% if lang == 'en' %}Enter your credentials{% else %}اطلاعات خود را وارد کنید{% endif %}</p>
                     </div>
-                    
+
                     <form method="POST" action="{% url 'login' %}" class="needs-validation" novalidate>
                         {% csrf_token %}
-                        
+
                         <div class="mb-4">
                             <label for="username" class="form-label fw-semibold">
-                                <i class="bi bi-person me-2"></i>نام کاربری
+                                <i class="bi bi-person me-2"></i>{{ T.username }}
                             </label>
-                            <input type="text" 
-                                   class="form-control form-control-lg" 
-                                   id="username" 
-                                   name="username" 
-                                   placeholder="نام کاربری خود را وارد کنید"
-                                   required>
+                            <input type="text" class="form-control form-control-lg" id="username" name="username"
+                                   placeholder="{% if lang == 'en' %}Enter your username{% else %}نام کاربری خود را وارد کنید{% endif %}" required>
                             <div class="invalid-feedback">
-                                لطفاً نام کاربری خود را وارد کنید
+                                {% if lang == 'en' %}Please enter your username{% else %}لطفاً نام کاربری خود را وارد کنید{% endif %}
                             </div>
                         </div>
-                        
+
                         <div class="mb-4">
                             <label for="password" class="form-label fw-semibold">
-                                <i class="bi bi-lock me-2"></i>رمز عبور
+                                <i class="bi bi-lock me-2"></i>{{ T.password }}
                             </label>
                             <div class="input-group">
-                                <input type="password" 
-                                       class="form-control form-control-lg" 
-                                       id="password" 
-                                       name="password" 
-                                       placeholder="رمز عبور خود را وارد کنید"
-                                       required>
+                                <input type="password" class="form-control form-control-lg" id="password" name="password"
+                                       placeholder="{% if lang == 'en' %}Enter your password{% else %}رمز عبور خود را وارد کنید{% endif %}" required>
                                 <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                                     <i class="bi bi-eye" id="toggleIcon"></i>
                                 </button>
                             </div>
                             <div class="invalid-feedback">
-                                لطفاً رمز عبور خود را وارد کنید
+                                {% if lang == 'en' %}Please enter your password{% else %}لطفاً رمز عبور خود را وارد کنید{% endif %}
                             </div>
                         </div>
-                        
-                        <div class="mb-4 form-check">
-                            <input type="checkbox" class="form-check-input" id="rememberMe">
-                            <label class="form-check-label" for="rememberMe">
-                                مرا به خاطر بسپار
-                            </label>
-                        </div>
-                        
+
                         <div class="d-grid mb-4">
                             <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="bi bi-box-arrow-in-right me-2"></i>
-                                ورود به حساب کاربری
+                                <i class="bi bi-box-arrow-in-right me-2"></i>{{ T.login_title }}
                             </button>
                         </div>
-                        
+
                         <div class="text-center">
-                            <p class="mb-0">حساب کاربری ندارید؟ 
+                            <p class="mb-0">{{ T.no_account }}
                                 <a href="{% url 'signup' %}" class="text-primary fw-semibold text-decoration-none">
-                                    همین حالا ثبت نام کنید
+                                    {{ T.signup }}
                                 </a>
                             </p>
                         </div>
@@ -92,11 +75,9 @@
 </div>
 
 <script>
-// Password toggle functionality
 document.getElementById('togglePassword').addEventListener('click', function() {
     const passwordField = document.getElementById('password');
     const toggleIcon = document.getElementById('toggleIcon');
-    
     if (passwordField.type === 'password') {
         passwordField.type = 'text';
         toggleIcon.className = 'bi bi-eye-slash';
@@ -105,9 +86,6 @@ document.getElementById('togglePassword').addEventListener('click', function() {
         toggleIcon.className = 'bi bi-eye';
     }
 });
-
-
-
 </script>
 
 {% endblock %}

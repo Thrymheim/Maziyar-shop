@@ -1,14 +1,12 @@
 {% extends "base.html" %}
 {% load humanize %}
-{% block title %}مدیریت کاربران - پنل مدیریت{% endblock %}
+{% block title %}{{ T.users }} - {{ T.admin_panel_title }}{% endblock %}
 
 {% block content %}
 <div class="container-fluid py-4 px-3 px-md-4">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
-        <h3 class="fw-bold"><i class="bi bi-people me-2"></i>مدیریت کاربران ({{ users|length }})</h3>
-        <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary btn-sm">
-            <i class="bi bi-arrow-right me-1"></i>بازگشت به پنل
-        </a>
+        <h3 class="fw-bold"><i class="bi bi-people me-2"></i>{{ T.users }} ({{ users|length }})</h3>
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-right me-1"></i>{{ T.back_to_panel }}</a>
     </div>
 
     <div class="card shadow-sm">
@@ -18,12 +16,12 @@
                     <thead class="table-light">
                         <tr>
                             <th>#</th>
-                            <th>نام کاربری</th>
-                            <th class="d-none d-md-table-cell">نام</th>
-                            <th class="d-none d-lg-table-cell">ایمیل</th>
-                            <th>وضعیت</th>
-                            <th class="d-none d-sm-table-cell">تاریخ</th>
-                            <th>عملیات</th>
+                            <th>{{ T.username }}</th>
+                            <th class="d-none d-md-table-cell">{{ T.first_name }}</th>
+                            <th class="d-none d-lg-table-cell">{{ T.email }}</th>
+                            <th>{{ T.status }}</th>
+                            <th class="d-none d-sm-table-cell">{{ T.join_date }}</th>
+                            <th>{{ T.actions }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,39 +33,31 @@
                             <td class="d-none d-lg-table-cell">{{ u.email|default:"-" }}</td>
                             <td>
                                 {% if u.is_staff %}
-                                    <span class="badge bg-danger">مدیر</span>
+                                    <span class="badge bg-danger">{{ T.admin }}</span>
                                 {% elif u.is_active %}
-                                    <span class="badge bg-success">فعال</span>
+                                    <span class="badge bg-success">{{ T.active }}</span>
                                 {% else %}
-                                    <span class="badge bg-secondary">غیرفعال</span>
+                                    <span class="badge bg-secondary">{{ T.inactive }}</span>
                                 {% endif %}
                             </td>
                             <td class="d-none d-sm-table-cell small">{{ u.date_joined|date:"Y/m/d" }}</td>
                             <td>
                                 {% if u != request.user %}
                                     {% if u.is_active %}
-                                        <a href="{% url 'admin_user_toggle' u.id %}" class="btn btn-outline-warning btn-sm py-0 px-1" title="غیرفعال کردن">
-                                            <i class="bi bi-lock"></i>
-                                        </a>
+                                        <a href="{% url 'admin_user_toggle' u.id %}" class="btn btn-outline-warning btn-sm py-0 px-1" title="{{ T.ban }}"><i class="bi bi-lock"></i></a>
                                     {% else %}
-                                        <a href="{% url 'admin_user_toggle' u.id %}" class="btn btn-outline-success btn-sm py-0 px-1" title="فعال کردن">
-                                            <i class="bi bi-unlock"></i>
-                                        </a>
+                                        <a href="{% url 'admin_user_toggle' u.id %}" class="btn btn-outline-success btn-sm py-0 px-1" title="{{ T.unban }}"><i class="bi bi-unlock"></i></a>
                                     {% endif %}
                                     {% if not u.is_staff %}
-                                        <a href="{% url 'admin_user_delete' u.id %}" class="btn btn-outline-danger btn-sm py-0 px-1" title="حذف" onclick="return confirm('آیا از حذف مطمئن هستید؟')">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
+                                        <a href="{% url 'admin_user_delete' u.id %}" class="btn btn-outline-danger btn-sm py-0 px-1" title="{{ T.delete }}" onclick="return confirm('{{ T.confirm_delete }}')"><i class="bi bi-trash"></i></a>
                                     {% endif %}
                                 {% else %}
-                                    <span class="text-muted small">شما</span>
+                                    <span class="text-muted small">{{ T.you }}</span>
                                 {% endif %}
                             </td>
                         </tr>
                         {% empty %}
-                        <tr>
-                            <td colspan="7" class="text-center py-4 text-muted">کاربری وجود ندارد</td>
-                        </tr>
+                        <tr><td colspan="7" class="text-center py-4 text-muted">{{ T.no_users }}</td></tr>
                         {% endfor %}
                     </tbody>
                 </table>

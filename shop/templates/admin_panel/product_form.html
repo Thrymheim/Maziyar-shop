@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{% if editing %}ویرایش محصول{% else %}افزودن محصول{% endif %} - پنل مدیریت{% endblock %}
+{% block title %}{% if editing %}{{ T.edit_product }}{% else %}{{ T.add_product }}{% endif %} - {{ T.admin_panel_title }}{% endblock %}
 
 {% block content %}
 <div class="container py-4 px-3 px-md-4">
@@ -7,27 +7,19 @@
         <div class="col-lg-8">
             <div class="card shadow-sm">
                 <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0 small">
-                        {% if editing %}
-                            <i class="bi bi-pencil me-2"></i>ویرایش: {{ product.name }}
-                        {% else %}
-                            <i class="bi bi-plus-circle me-2"></i>افزودن محصول جدید
-                        {% endif %}
-                    </h5>
-                    <a href="{% url 'admin_products_list' %}" class="btn btn-outline-secondary btn-sm">
-                        <i class="bi bi-arrow-right me-1"></i>بازگشت
-                    </a>
+                    <h5 class="mb-0 small">{% if editing %}<i class="bi bi-pencil me-2"></i>{{ T.edit_product }}: {{ product.name }}{% else %}<i class="bi bi-plus-circle me-2"></i>{{ T.add_product }}{% endif %}</h5>
+                    <a href="{% url 'admin_products_list' %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-right me-1"></i>{{ T.back_to_panel }}</a>
                 </div>
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="row g-3">
                             <div class="col-md-8">
-                                <label class="form-label small">نام محصول *</label>
+                                <label class="form-label small">{{ T.product_name }} *</label>
                                 <input type="text" class="form-control" name="name" value="{{ product.name|default:'' }}" required>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label small">دسته بندی *</label>
+                                <label class="form-label small">{{ T.category_select }} *</label>
                                 <select class="form-select" name="category" required>
                                     {% for cat in categories %}
                                         <option value="{{ cat.id }}" {% if product.category.id == cat.id %}selected{% endif %}>{{ cat.name }}</option>
@@ -35,37 +27,35 @@
                                 </select>
                             </div>
                             <div class="col-12">
-                                <label class="form-label small">توضیحات محصول *</label>
+                                <label class="form-label small">{{ T.description }} *</label>
                                 <textarea class="form-control" name="discription" rows="4" required>{{ product.discription|default:'' }}</textarea>
                             </div>
                             <div class="col-sm-4">
-                                <label class="form-label small">قیمت (تومان) *</label>
+                                <label class="form-label small">{{ T.price }} *</label>
                                 <input type="number" class="form-control" name="price" value="{{ product.price|default:'' }}" required>
                             </div>
                             <div class="col-sm-4">
-                                <label class="form-label small">امتیاز (0-5)</label>
+                                <label class="form-label small">{{ T.rating }}</label>
                                 <input type="number" class="form-control" name="star" value="{{ product.star|default:0 }}" min="0" max="5">
                             </div>
                             <div class="col-sm-4">
-                                <label class="form-label small">تصویر محصول</label>
+                                <label class="form-label small">{{ T.product_image }}</label>
                                 <input type="file" class="form-control" name="picture" accept="image/*" {% if not editing %}required{% endif %}>
                             </div>
                             <div class="col-12">
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" name="is_sale" id="isSale" {% if product.is_sale %}checked{% endif %}>
-                                    <label class="form-check-label" for="isSale">تخفیف ویژه</label>
+                                    <label class="form-check-label" for="isSale">{{ T.special_sale_toggle }}</label>
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <label class="form-label small">قیمت تخفیف (تومان)</label>
+                                <label class="form-label small">{{ T.sale_price }}</label>
                                 <input type="number" class="form-control" name="sale_price" value="{{ product.sale_price|default:'' }}">
                             </div>
                             <div class="col-12">
                                 <hr>
-                                <button type="submit" class="btn btn-primary btn-lg w-100 w-md-auto">
-                                    <i class="bi bi-check-lg me-1"></i>{% if editing %}ذخیره تغییرات{% else %}افزودن محصول{% endif %}
-                                </button>
-                                <a href="{% url 'admin_products_list' %}" class="btn btn-outline-secondary btn-lg w-100 w-md-auto mt-2 mt-md-0 me-md-2">لغو</a>
+                                <button type="submit" class="btn btn-primary btn-lg w-100 w-md-auto"><i class="bi bi-check-lg me-1"></i>{{ T.save }}</button>
+                                <a href="{% url 'admin_products_list' %}" class="btn btn-outline-secondary btn-lg w-100 w-md-auto mt-2 mt-md-0 me-md-2">{{ T.cancel }}</a>
                             </div>
                         </div>
                     </form>

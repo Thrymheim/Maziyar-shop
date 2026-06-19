@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="فروشگاه آنلاین مازیار شاپ - خرید آسان و مطمئن" />
         <meta name="author" content="Digikala Team" />
-        <title>{% block title %}مازیار شاپ - فروشگاه آنلاین{% endblock %}</title>
+        <title>{% block title %}{% if lang == 'en' %}Maziyar Shop{% else %}مازیار شاپ{% endif %}{% endblock %}</title>
         
         <!-- Favicon-->
         <link rel="icon" type="image/png" href="https://www.clipartmax.com/png/middle/291-2915631_e-store-bd-favicon-online-shopping.png" />
@@ -154,88 +154,85 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="d-flex align-items-center mb-3">
                             <i class="bi bi-shop fs-3 me-3 text-warning"></i>
-                            <h5 class="fw-bold mb-0">مازیار شاپ</h5>
+                            <h5 class="fw-bold mb-0">{% if lang == 'en' %}Maziyar Shop{% else %}مازیار شاپ{% endif %}</h5>
                         </div>
-                        <p class="text-light mb-4">
-                            فروشگاه آنلاین معتبر با بهترین قیمت‌ها و کیفیت بالا. 
-                            خرید آسان و مطمئن از هزاران محصول متنوع.
-                        </p>
                         <div class="d-flex gap-2">
-                            <a href="#" class="btn btn-outline-light btn-social" title="تلگرام">
+                            <a href="#" class="btn btn-outline-light btn-social" title="Telegram">
                                 <i class="bi bi-telegram"></i>
                             </a>
-                            <a href="#" class="btn btn-outline-light btn-social" title="اینستاگرام">
+                            <a href="#" class="btn btn-outline-light btn-social" title="Instagram">
                                 <i class="bi bi-instagram"></i>
                             </a>
-                            <a href="#" class="btn btn-outline-light btn-social" title="واتساپ">
+                            <a href="#" class="btn btn-outline-light btn-social" title="WhatsApp">
                                 <i class="bi bi-whatsapp"></i>
                             </a>
-                            <a href="#" class="btn btn-outline-light btn-social" title="یوتیوب">
+                            <a href="#" class="btn btn-outline-light btn-social" title="YouTube">
                                 <i class="bi bi-youtube"></i>
                             </a>
                         </div>
                     </div>
-                    
+
                     <div class="col-lg-2 col-md-6">
-                        <h6 class="fw-bold mb-3 text-warning">دسترسی سریع</h6>
+                        <h6 class="fw-bold mb-3 text-warning">{{ T.quick_access }}</h6>
                         <ul class="list-unstyled">
                             <li class="mb-2">
                                 <a href="{% url 'home' %}" class="text-light text-decoration-none d-flex align-items-center">
-                                    <i class="bi bi-house me-2"></i>خانه
+                                    <i class="bi bi-house me-2"></i>{{ T.home }}
                                 </a>
                             </li>
                             <li class="mb-2">
                                 <a href="{% url 'about' %}" class="text-light text-decoration-none d-flex align-items-center">
-                                    <i class="bi bi-info-circle me-2"></i>درباره ما
+                                    <i class="bi bi-info-circle me-2"></i>{{ T.about }}
                                 </a>
                             </li>
                             <li class="mb-2">
                                 <a href="{% url 'contact' %}" class="text-light text-decoration-none d-flex align-items-center">
-                                    <i class="bi bi-telephone me-2"></i>تماس با ما
+                                    <i class="bi bi-telephone me-2"></i>{{ T.contact_us }}
                                 </a>
                             </li>
                             <li class="mb-2">
                                 <a href="{% url 'terms' %}" class="text-light text-decoration-none d-flex align-items-center">
-                                    <i class="bi bi-file-text me-2"></i>قوانین و مقررات
+                                    <i class="bi bi-file-text me-2"></i>{{ T.terms_title }}
                                 </a>
                             </li>
                         </ul>
                     </div>
-                    
+
                     <div class="col-lg-3 col-md-6">
-                        <h6 class="fw-bold mb-3 text-warning">تماس با ما</h6>
+                        <h6 class="fw-bold mb-3 text-warning">{{ T.contact_us }}</h6>
                         <div class="d-flex align-items-center mb-3">
                             <i class="bi bi-telephone-fill me-3 text-warning"></i>
                             <div>
                                 <div class="text-light">۰۲۱-۱۲۳۴۵۶۷۸</div>
-                                <small class="text-muted">پشتیبانی ۲۴ ساعته</small>
+                                <small class="text-muted">{{ T.support_24h }}</small>
                             </div>
                         </div>
                         <div class="d-flex align-items-center mb-3">
                             <i class="bi bi-envelope-fill me-3 text-warning"></i>
                             <div>
-                                <div class="text-light">digikala@gmail.com</div>
-                                <small class="text-muted">ایمیل پشتیبانی</small>
+                                <div class="text-light">maziyar@gmail.com</div>
+                                <small class="text-muted">{{ T.email_support }}</small>
                             </div>
                         </div>
                         <div class="d-flex align-items-center">
                             <i class="bi bi-geo-alt-fill me-3 text-warning"></i>
                             <div>
-                                <div class="text-light">مازندران، ایران</div>
-                                <small class="text-muted">دفتر مرکزی</small>
+                                <div class="text-light">Mazandaran, Iran</div>
+                                <small class="text-muted">{{ T.headquarters }}</small>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <hr class="my-4 border-secondary">
-                
+
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <p class="mb-0 text-light d-flex align-items-center">
                             <i class="bi bi-c-circle me-2"></i>
-                             طراحی شده توسط مازیار کلاگر. 
-
+                            {{ T.copyright }}
+                            <span class="text-warning mx-1">Django</span>
+                            <i class="bi bi-heart-fill text-danger mx-1"></i>
                         </p>
                     </div>
                     <div class="col-md-6 text-md-end">

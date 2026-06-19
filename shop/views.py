@@ -9,6 +9,72 @@ from django import forms
 from .forms import SignUpForm
 from django.http import JsonResponse
 from django.db.models import Q
+from .translations import TRANSLATIONS
+
+
+def get_msg(request, key):
+    lang = request.session.get('language', 'fa')
+    msgs = {
+        'fa': {
+            'logged_in': 'با موفقیت وارد شدید',
+            'wrong_pass': 'نام کاربری یا رمز عبور اشتباه است',
+            'logged_out': '!با موفقیت خارج شدید',
+            'account_created': 'اکانت شما ساخته شد!',
+            'signup_error': 'مشکلی در ثبت نام شما وجود دارد!',
+            'msg_sent': 'پیام شما با موفقیت ارسال شد!',
+            'fill_fields': 'لطفاً تمام فیلدها را پر کنید!',
+            'category_not_found': 'دسته بندی وجود ندارد',
+            'username_changed': 'نام کاربری با موفقیت تغییر کرد!',
+            'username_taken': 'این نام کاربری قبلاً استفاده شده است!',
+            'enter_new_username': 'نام کاربری جدید را وارد کنید!',
+            'password_changed': 'رمز عبور با موفقیت تغییر کرد!',
+            'product_added': 'محصول با موفقیت اضافه شد!',
+            'product_edited': 'محصول با موفقیت ویرایش شد!',
+            'product_deleted': 'محصول با موفقیت حذف شد!',
+            'category_added': 'دسته بندی با موفقیت اضافه شد!',
+            'category_edited': 'دسته بندی با موفقیت ویرایش شد!',
+            'category_deleted': 'دسته بندی با موفقیت حذف شد!',
+            'user_activated': 'کاربر فعال شد!',
+            'user_deactivated': 'کاربر غیرفعال شد!',
+            'user_deleted': 'کاربر حذف شد!',
+            'comment_activated': 'نظر فعال شد!',
+            'comment_deactivated': 'نظر غیرفعال شد!',
+            'comment_deleted': 'نظر حذف شد!',
+            'enter_category_name': 'نام دسته بندی را وارد کنید!',
+            'login_required': 'لطفاً ابتدا وارد شوید!',
+            'no_permission': 'شما دسترسی به پنل مدیریت ندارید!',
+        },
+        'en': {
+            'logged_in': 'Successfully logged in!',
+            'wrong_pass': 'Invalid username or password',
+            'logged_out': 'Successfully logged out!',
+            'account_created': 'Your account has been created!',
+            'signup_error': 'There was a problem with your registration!',
+            'msg_sent': 'Your message has been sent successfully!',
+            'fill_fields': 'Please fill in all fields!',
+            'category_not_found': 'Category not found',
+            'username_changed': 'Username changed successfully!',
+            'username_taken': 'This username is already taken!',
+            'enter_new_username': 'Please enter a new username!',
+            'password_changed': 'Password changed successfully!',
+            'product_added': 'Product added successfully!',
+            'product_edited': 'Product edited successfully!',
+            'product_deleted': 'Product deleted successfully!',
+            'category_added': 'Category added successfully!',
+            'category_edited': 'Category edited successfully!',
+            'category_deleted': 'Category deleted successfully!',
+            'user_activated': 'User activated!',
+            'user_deactivated': 'User deactivated!',
+            'user_deleted': 'User deleted!',
+            'comment_activated': 'Comment activated!',
+            'comment_deactivated': 'Comment deactivated!',
+            'comment_deleted': 'Comment deleted!',
+            'enter_category_name': 'Please enter a category name!',
+            'login_required': 'Please login first!',
+            'no_permission': 'You do not have access to the admin panel!',
+        }
+    }
+    return msgs.get(lang, msgs['fa']).get(key, key)
 
 
 def helloworld(request):
@@ -62,10 +128,10 @@ def contact(request):
         subject = request.POST.get('subject', '')
         message = request.POST.get('message', '')
         if name and email and message:
-            messages.success(request, 'پیام شما با موفقیت ارسال شد!')
+            messages.success(request, get_msg(request, 'msg_sent'))
             return redirect('contact')
         else:
-            messages.error(request, 'لطفاً تمام فیلدها را پر کنید!')
+            messages.error(request, get_msg(request, 'fill_fields'))
     return render(request, 'contact.html')
 
 def terms(request):
@@ -79,10 +145,10 @@ def login_user(request):
          user = authenticate(request , username= username , password=password)
          if user is not None:
              login(request , user)
-             messages.success(request , ("با موفقیت وارد شدید"))
+             messages.success(request , get_msg(request, 'logged_in'))
              return redirect("home")
          else:
-             messages.error(request , ("نام کاربری یا رمز عبور اشتباه است"))
+             messages.error(request , get_msg(request, 'wrong_pass'))
              return redirect("login") 
 
      else:    
@@ -90,8 +156,10 @@ def login_user(request):
    
 
 def logout_user(request):
+    lang = request.session.get('language', 'fa')
     logout(request)
-    messages.success(request , ("!با موفقیت خارج شدید"))
+    request.session['language'] = lang
+    messages.success(request , get_msg(request, 'logged_out'))
     return redirect("home") 
 
 
@@ -109,11 +177,11 @@ def signup_user(request):
             user = authenticate(request, username=username, password=password1)
             login(request, user)
 
-            messages.success(request, 'اکانت شما ساخته شد!')
+            messages.success(request, get_msg(request, 'account_created'))
             return redirect("home")
 
         else:
-            messages.error(request, 'مشکلی در ثبت نام شما وجود دارد!')
+            messages.error(request, get_msg(request, 'signup_error'))
             return render(request, 'signup.html', {'form': form})
 
     else:
@@ -160,20 +228,20 @@ def profile(request):
             new_username = request.POST.get('username', '').strip()
             if new_username and new_username != request.user.username:
                 if User.objects.filter(username=new_username).exists():
-                    messages.error(request, 'این نام کاربری قبلاً استفاده شده است!')
+                    messages.error(request, get_msg(request, 'username_taken'))
                 else:
                     request.user.username = new_username
                     request.user.save()
-                    messages.success(request, 'نام کاربری با موفقیت تغییر کرد!')
+                    messages.success(request, get_msg(request, 'username_changed'))
             else:
-                messages.error(request, 'نام کاربری جدید را وارد کنید!')
+                messages.error(request, get_msg(request, 'enter_new_username'))
 
         elif form_type == 'password':
             form = PasswordChangeForm(request.user, request.POST)
             if form.is_valid():
                 user = form.save()
                 update_session_auth_hash(request, user)
-                messages.success(request, 'رمز عبور با موفقیت تغییر کرد!')
+                messages.success(request, get_msg(request, 'password_changed'))
             else:
                 for error in form.errors.values():
                     messages.error(request, error.as_text())
@@ -202,7 +270,7 @@ def category(request,cat):
       products = Product.objects.filter(category = category)
       return render(request , 'category.html' , {'products' : products , "category": category})
     except:
-      messages.success(request , ('دسته بندی وجود ندارد'))
+      messages.success(request , get_msg(request, 'category_not_found'))
       return redirect("home")
 
 
@@ -219,13 +287,21 @@ def newsletter_subscribe(request):
     return JsonResponse({'success': False, 'error': 'درخواست نامعتبر'}, status=400)
 
 
+def switch_language(request):
+    lang = request.GET.get('lang', 'fa')
+    if lang not in ('fa', 'en'):
+        lang = 'fa'
+    request.session['language'] = lang
+    return redirect(request.META.get('HTTP_REFERER', '/'))
+
+
 def admin_required(view_func):
     def wrapper(request, *args, **kwargs):
         if not request.user.is_authenticated:
-            messages.error(request, 'لطفاً ابتدا وارد شوید!')
+            messages.error(request, get_msg(request, 'login_required'))
             return redirect('login')
         if not request.user.is_staff:
-            messages.error(request, 'شما دسترسی به پنل مدیریت ندارید!')
+            messages.error(request, get_msg(request, 'no_permission'))
             return redirect('home')
         return view_func(request, *args, **kwargs)
     return wrapper
@@ -263,7 +339,7 @@ def admin_product_add(request):
         if request.FILES.get('picture'):
             product.picture = request.FILES['picture']
         product.save()
-        messages.success(request, 'محصول با موفقیت اضافه شد!')
+        messages.success(request, get_msg(request, 'product_added'))
         return redirect('admin_dashboard')
     return render(request, 'admin_panel/product_form.html', {'categories': categories, 'editing': False})
 
@@ -283,7 +359,7 @@ def admin_product_edit(request, pk):
         if request.FILES.get('picture'):
             product.picture = request.FILES['picture']
         product.save()
-        messages.success(request, 'محصول با موفقیت ویرایش شد!')
+        messages.success(request, get_msg(request, 'product_edited'))
         return redirect('admin_dashboard')
     return render(request, 'admin_panel/product_form.html', {'product': product, 'categories': categories, 'editing': True})
 
@@ -293,7 +369,7 @@ def admin_product_delete(request, pk):
     product = get_object_or_404(Product, id=pk)
     if request.method == 'POST':
         product.delete()
-        messages.success(request, 'محصول با موفقیت حذف شد!')
+        messages.success(request, get_msg(request, 'product_deleted'))
         return redirect('admin_dashboard')
     return render(request, 'admin_panel/confirm_delete.html', {'item_name': f'محصول «{product.name}»'})
 
@@ -304,10 +380,10 @@ def admin_category_add(request):
         name = request.POST.get('name', '').strip()
         if name:
             Category.objects.create(name=name)
-            messages.success(request, 'دسته بندی با موفقیت اضافه شد!')
+            messages.success(request, get_msg(request, 'category_added'))
             return redirect('admin_dashboard')
         else:
-            messages.error(request, 'نام دسته بندی را وارد کنید!')
+            messages.error(request, get_msg(request, 'enter_category_name'))
     return render(request, 'admin_panel/category_form.html', {'editing': False})
 
 
@@ -319,10 +395,10 @@ def admin_category_edit(request, pk):
         if name:
             category.name = name
             category.save()
-            messages.success(request, 'دسته بندی با موفقیت ویرایش شد!')
+            messages.success(request, get_msg(request, 'category_edited'))
             return redirect('admin_dashboard')
         else:
-            messages.error(request, 'نام دسته بندی را وارد کنید!')
+            messages.error(request, get_msg(request, 'enter_category_name'))
     return render(request, 'admin_panel/category_form.html', {'category': category, 'editing': True})
 
 
@@ -331,7 +407,7 @@ def admin_category_delete(request, pk):
     category = get_object_or_404(Category, id=pk)
     if request.method == 'POST':
         category.delete()
-        messages.success(request, 'دسته بندی با موفقیت حذف شد!')
+        messages.success(request, get_msg(request, 'category_deleted'))
         return redirect('admin_dashboard')
     return render(request, 'admin_panel/confirm_delete.html', {'item_name': f'دسته بندی «{category.name}»'})
 
@@ -404,8 +480,8 @@ def admin_user_toggle(request, pk):
     if user != request.user and not user.is_staff:
         user.is_active = not user.is_active
         user.save()
-        status = 'فعال' if user.is_active else 'غیرفعال'
-        messages.success(request, f'کاربر «{user.username}» {status} شد!')
+        status = get_msg(request, 'user_activated') if user.is_active else get_msg(request, 'user_deactivated')
+        messages.success(request, status)
     return redirect('admin_users_list')
 
 
@@ -414,7 +490,7 @@ def admin_user_delete(request, pk):
     user = get_object_or_404(User, id=pk)
     if user != request.user and not user.is_staff:
         user.delete()
-        messages.success(request, f'کاربر «{user.username}» حذف شد!')
+        messages.success(request, get_msg(request, 'user_deleted'))
     return redirect('admin_users_list')
 
 
@@ -428,8 +504,8 @@ def admin_comment_toggle(request, pk):
     comment = get_object_or_404(Comment, id=pk)
     comment.is_active = not comment.is_active
     comment.save()
-    status = 'فعال' if comment.is_active else 'غیرفعال'
-    messages.success(request, f'نظر «{comment.user.username}» {status} شد!')
+    status = get_msg(request, 'comment_activated') if comment.is_active else get_msg(request, 'comment_deactivated')
+    messages.success(request, status)
     return redirect('admin_comments_list')
 
 
@@ -437,5 +513,5 @@ def admin_comment_toggle(request, pk):
 def admin_comment_delete(request, pk):
     comment = get_object_or_404(Comment, id=pk)
     comment.delete()
-    messages.success(request, 'نظر با موفقیت حذف شد!')
+    messages.success(request, get_msg(request, 'comment_deleted'))
     return redirect('admin_comments_list')

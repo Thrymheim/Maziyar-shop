@@ -17,6 +17,7 @@ urlpatterns = [
     path('product/<int:pk>/comment/' , views.add_comment , name = "add_comment"),
     path('profile/' , views.profile , name = "profile"),
     path('search/' , views.search , name = "search"),
+    path('switch-language/' , views.switch_language , name = "switch_language"),
 
     # Admin Panel
     path('admin-panel/' , views.admin_dashboard , name = "admin_dashboard"),

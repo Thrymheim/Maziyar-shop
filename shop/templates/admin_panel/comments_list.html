@@ -1,13 +1,11 @@
 {% extends "base.html" %}
-{% block title %}مدیریت نظرات - پنل مدیریت{% endblock %}
+{% block title %}{{ T.reviews_count }} - {{ T.admin_panel_title }}{% endblock %}
 
 {% block content %}
 <div class="container-fluid py-4 px-3 px-md-4">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
-        <h3 class="fw-bold"><i class="bi bi-chat-dots me-2"></i>مدیریت نظرات ({{ comments|length }})</h3>
-        <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary btn-sm">
-            <i class="bi bi-arrow-right me-1"></i>بازگشت به پنل
-        </a>
+        <h3 class="fw-bold"><i class="bi bi-chat-dots me-2"></i>{{ T.reviews_count }} ({{ comments|length }})</h3>
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-right me-1"></i>{{ T.back_to_panel }}</a>
     </div>
 
     <div class="card shadow-sm">
@@ -17,13 +15,13 @@
                     <thead class="table-light">
                         <tr>
                             <th>#</th>
-                            <th>کاربر</th>
-                            <th class="d-none d-md-table-cell">محصول</th>
-                            <th>امتیاز</th>
-                            <th class="d-none d-lg-table-cell">متن</th>
-                            <th class="d-none d-sm-table-cell">تاریخ</th>
-                            <th>وضعیت</th>
-                            <th>عملیات</th>
+                            <th>{{ T.username }}</th>
+                            <th class="d-none d-md-table-cell">{{ T.product_name }}</th>
+                            <th>{{ T.rating }}</th>
+                            <th class="d-none d-lg-table-cell">{{ T.message }}</th>
+                            <th class="d-none d-sm-table-cell">{{ T.join_date }}</th>
+                            <th>{{ T.status }}</th>
+                            <th>{{ T.actions }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,35 +30,17 @@
                             <td>{{ c.id }}</td>
                             <td><strong>{{ c.user.username }}</strong></td>
                             <td class="d-none d-md-table-cell small">{{ c.product.name|truncatewords:3 }}</td>
-                            <td>
-                                <span class="text-warning">
-                                    {% for _ in "12345" %}
-                                        {% if forloop.counter <= c.rating %}★{% else %}☆{% endif %}
-                                    {% endfor %}
-                                </span>
-                            </td>
+                            <td><span class="text-warning">{% for _ in "12345" %}{% if forloop.counter <= c.rating %}★{% else %}☆{% endif %}{% endfor %}</span></td>
                             <td class="d-none d-lg-table-cell small">{{ c.body|truncatewords:8 }}</td>
                             <td class="d-none d-sm-table-cell small">{{ c.created_at|date:"Y/m/d H:i" }}</td>
+                            <td>{% if c.is_active %}<span class="badge bg-success">{{ T.active }}</span>{% else %}<span class="badge bg-secondary">{{ T.inactive }}</span>{% endif %}</td>
                             <td>
-                                {% if c.is_active %}
-                                    <span class="badge bg-success">فعال</span>
-                                {% else %}
-                                    <span class="badge bg-secondary">غیرفعال</span>
-                                {% endif %}
-                            </td>
-                            <td>
-                                <a href="{% url 'admin_comment_toggle' c.id %}" class="btn btn-outline-warning btn-sm py-0 px-1" title="{% if c.is_active %}غیرفعال کردن{% else %}فعال کردن{% endif %}">
-                                    <i class="bi bi-{% if c.is_active %}eye-slash{% else %}eye{% endif %}"></i>
-                                </a>
-                                <a href="{% url 'admin_comment_delete' c.id %}" class="btn btn-outline-danger btn-sm py-0 px-1" title="حذف" onclick="return confirm('آیا از حذف مطمئن هستید؟')">
-                                    <i class="bi bi-trash"></i>
-                                </a>
+                                <a href="{% url 'admin_comment_toggle' c.id %}" class="btn btn-outline-warning btn-sm py-0 px-1"><i class="bi bi-{% if c.is_active %}eye-slash{% else %}eye{% endif %}"></i></a>
+                                <a href="{% url 'admin_comment_delete' c.id %}" class="btn btn-outline-danger btn-sm py-0 px-1" onclick="return confirm('{{ T.confirm_delete }}')"><i class="bi bi-trash"></i></a>
                             </td>
                         </tr>
                         {% empty %}
-                        <tr>
-                            <td colspan="8" class="text-center py-4 text-muted">نظری ثبت نشده</td>
-                        </tr>
+                        <tr><td colspan="8" class="text-center py-4 text-muted">{{ T.no_comments_found }}</td></tr>
                         {% endfor %}
                     </tbody>
                 </table>

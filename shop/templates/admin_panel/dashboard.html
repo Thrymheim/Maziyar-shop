@@ -1,17 +1,16 @@
 {% extends "base.html" %}
 {% load humanize %}
-{% block title %}پنل مدیریت - مازیار شاپ{% endblock %}
+{% block title %}{{ T.admin_panel_title }}{% endblock %}
 
 {% block content %}
 <div class="container-fluid py-4 px-3 px-md-4">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
-        <h3 class="fw-bold"><i class="bi bi-speedometer2 me-2"></i>پنل مدیریت</h3>
+        <h3 class="fw-bold"><i class="bi bi-speedometer2 me-2"></i>{{ T.admin_panel_title }}</h3>
         <a href="{% url 'profile' %}" class="btn btn-outline-secondary">
-            <i class="bi bi-arrow-right me-1"></i>بازگشت به پروفایل
+            <i class="bi bi-arrow-right me-1"></i>{{ T.back_to_profile }}
         </a>
     </div>
 
-    <!-- Stats Cards -->
     <div class="row g-3 g-md-4 mb-4">
         <div class="col-6 col-md-3">
             <a href="{% url 'admin_products_list' %}" class="text-decoration-none">
@@ -19,7 +18,7 @@
                     <div class="card-body p-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h6 class="text-white-50 mb-1 small">محصولات</h6>
+                                <h6 class="text-white-50 mb-1 small">{{ T.products }}</h6>
                                 <h3 class="mb-0">{{ stats.products }}</h3>
                             </div>
                             <i class="bi bi-box-seam fs-2 opacity-50 d-none d-sm-block"></i>
@@ -34,7 +33,7 @@
                     <div class="card-body p-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h6 class="text-white-50 mb-1 small">دسته بندی‌ها</h6>
+                                <h6 class="text-white-50 mb-1 small">{{ T.categories }}</h6>
                                 <h3 class="mb-0">{{ stats.categories }}</h3>
                             </div>
                             <i class="bi bi-grid fs-2 opacity-50 d-none d-sm-block"></i>
@@ -49,7 +48,7 @@
                     <div class="card-body p-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h6 class="text-dark-50 mb-1 small">کاربران</h6>
+                                <h6 class="text-dark-50 mb-1 small">{{ T.users }}</h6>
                                 <h3 class="mb-0">{{ stats.users }}</h3>
                             </div>
                             <i class="bi bi-people fs-2 opacity-50 d-none d-sm-block"></i>
@@ -64,7 +63,7 @@
                     <div class="card-body p-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h6 class="text-white-50 mb-1 small">نظرات</h6>
+                                <h6 class="text-white-50 mb-1 small">{{ T.reviews_count }}</h6>
                                 <h3 class="mb-0">{{ stats.comments }}</h3>
                             </div>
                             <i class="bi bi-chat-dots fs-2 opacity-50 d-none d-sm-block"></i>
@@ -76,13 +75,12 @@
     </div>
 
     <div class="row g-4">
-        <!-- Products -->
         <div class="col-lg-8">
             <div class="card shadow-sm">
                 <div class="card-header d-flex justify-content-between align-items-center bg-white">
-                    <h5 class="mb-0 small"><i class="bi bi-box-seam me-2"></i>محصولات</h5>
+                    <h5 class="mb-0 small"><i class="bi bi-box-seam me-2"></i>{{ T.products }}</h5>
                     <a href="{% url 'admin_product_add' %}" class="btn btn-primary btn-sm">
-                        <i class="bi bi-plus-lg me-1"></i><span class="d-none d-sm-inline">افزودن</span>
+                        <i class="bi bi-plus-lg me-1"></i><span class="d-none d-sm-inline">{{ T.add_product }}</span>
                     </a>
                 </div>
                 <div class="card-body p-0">
@@ -91,11 +89,11 @@
                             <thead class="table-light">
                                 <tr>
                                     <th>#</th>
-                                    <th>نام</th>
-                                    <th class="d-none d-md-table-cell">دسته بندی</th>
-                                    <th>قیمت</th>
-                                    <th class="d-none d-lg-table-cell">تخفیف</th>
-                                    <th>عملیات</th>
+                                    <th>{{ T.product_name }}</th>
+                                    <th class="d-none d-md-table-cell">{{ T.category_select }}</th>
+                                    <th>{{ T.price }}</th>
+                                    <th class="d-none d-lg-table-cell">{{ T.special_sale }}</th>
+                                    <th>{{ T.actions }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -113,18 +111,12 @@
                                         {% endif %}
                                     </td>
                                     <td>
-                                        <a href="{% url 'admin_product_edit' p.id %}" class="btn btn-outline-primary btn-sm py-0">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-                                        <a href="{% url 'admin_product_delete' p.id %}" class="btn btn-outline-danger btn-sm py-0" onclick="return confirm('آیا از حذف مطمئن هستید؟')">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
+                                        <a href="{% url 'admin_product_edit' p.id %}" class="btn btn-outline-primary btn-sm py-0"><i class="bi bi-pencil"></i></a>
+                                        <a href="{% url 'admin_product_delete' p.id %}" class="btn btn-outline-danger btn-sm py-0" onclick="return confirm('{{ T.confirm_delete }}')"><i class="bi bi-trash"></i></a>
                                     </td>
                                 </tr>
                                 {% empty %}
-                                <tr>
-                                    <td colspan="6" class="text-center py-4 text-muted">محصولی وجود ندارد</td>
-                                </tr>
+                                <tr><td colspan="6" class="text-center py-4 text-muted">{{ T.no_products_found }}</td></tr>
                                 {% endfor %}
                             </tbody>
                         </table>
@@ -133,37 +125,30 @@
             </div>
         </div>
 
-        <!-- Categories & Quick Actions -->
         <div class="col-lg-4">
             <div class="card shadow-sm mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center bg-white">
-                    <h5 class="mb-0 small"><i class="bi bi-grid me-2"></i>دسته بندی‌ها</h5>
-                    <a href="{% url 'admin_category_add' %}" class="btn btn-success btn-sm py-0">
-                        <i class="bi bi-plus-lg"></i>
-                    </a>
+                    <h5 class="mb-0 small"><i class="bi bi-grid me-2"></i>{{ T.categories }}</h5>
+                    <a href="{% url 'admin_category_add' %}" class="btn btn-success btn-sm py-0"><i class="bi bi-plus-lg"></i></a>
                 </div>
                 <div class="card-body">
                     {% for cat in categories %}
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span>{{ cat.name }}</span>
                             <div>
-                                <a href="{% url 'admin_category_edit' cat.id %}" class="btn btn-outline-primary btn-sm py-0 px-1">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <a href="{% url 'admin_category_delete' cat.id %}" class="btn btn-outline-danger btn-sm py-0 px-1" onclick="return confirm('آیا از حذف مطمئن هستید؟')">
-                                    <i class="bi bi-trash"></i>
-                                </a>
+                                <a href="{% url 'admin_category_edit' cat.id %}" class="btn btn-outline-primary btn-sm py-0 px-1"><i class="bi bi-pencil"></i></a>
+                                <a href="{% url 'admin_category_delete' cat.id %}" class="btn btn-outline-danger btn-sm py-0 px-1" onclick="return confirm('{{ T.confirm_delete }}')"><i class="bi bi-trash"></i></a>
                             </div>
                         </div>
                     {% empty %}
-                        <p class="text-muted mb-0">دسته بندی وجود ندارد</p>
+                        <p class="text-muted mb-0">{{ T.no_categories }}</p>
                     {% endfor %}
                 </div>
             </div>
 
             <div class="card shadow-sm">
                 <div class="card-header bg-white">
-                    <h5 class="mb-0 small"><i class="bi bi-chat-dots me-2"></i>آخرین نظرات</h5>
+                    <h5 class="mb-0 small"><i class="bi bi-chat-dots me-2"></i>{{ T.last_comments }}</h5>
                 </div>
                 <div class="card-body">
                     {% for c in recent_comments %}
@@ -171,16 +156,14 @@
                             <div class="d-flex justify-content-between">
                                 <strong class="small">{{ c.user.username }}</strong>
                                 <span class="text-warning small">
-                                    {% for _ in "12345" %}
-                                        {% if forloop.counter <= c.rating %}★{% else %}☆{% endif %}
-                                    {% endfor %}
+                                    {% for _ in "12345" %}{% if forloop.counter <= c.rating %}★{% else %}☆{% endif %}{% endfor %}
                                 </span>
                             </div>
                             <small class="text-muted">{{ c.product.name }}</small>
                             <p class="mb-0 small">{{ c.body|truncatewords:8 }}</p>
                         </div>
                     {% empty %}
-                        <p class="text-muted mb-0">نظری ثبت نشده</p>
+                        <p class="text-muted mb-0">{{ T.no_comments_found }}</p>
                     {% endfor %}
                 </div>
             </div>

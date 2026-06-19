@@ -1,17 +1,13 @@
 {% extends "base.html" %}
-{% block title %}مدیریت دسته بندی‌ها - پنل مدیریت{% endblock %}
+{% block title %}{{ T.categories }} - {{ T.admin_panel_title }}{% endblock %}
 
 {% block content %}
 <div class="container-fluid py-4 px-3 px-md-4">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
-        <h3 class="fw-bold"><i class="bi bi-grid me-2"></i>مدیریت دسته بندی‌ها ({{ categories|length }})</h3>
+        <h3 class="fw-bold"><i class="bi bi-grid me-2"></i>{{ T.categories }} ({{ categories|length }})</h3>
         <div class="d-flex gap-2">
-            <a href="{% url 'admin_category_add' %}" class="btn btn-success btn-sm">
-                <i class="bi bi-plus-lg me-1"></i>افزودن
-            </a>
-            <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary btn-sm">
-                <i class="bi bi-arrow-right me-1"></i>بازگشت
-            </a>
+            <a href="{% url 'admin_category_add' %}" class="btn btn-success btn-sm"><i class="bi bi-plus-lg me-1"></i>{{ T.add_category }}</a>
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-right me-1"></i>{{ T.back_to_panel }}</a>
         </div>
     </div>
 
@@ -22,9 +18,9 @@
                     <thead class="table-light">
                         <tr>
                             <th>#</th>
-                            <th>نام دسته بندی</th>
-                            <th>تعداد محصولات</th>
-                            <th>عملیات</th>
+                            <th>{{ T.category_name }}</th>
+                            <th>{{ T.product_count }}</th>
+                            <th>{{ T.actions }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,20 +28,14 @@
                         <tr>
                             <td>{{ cat.id }}</td>
                             <td><strong>{{ cat.name }}</strong></td>
-                            <td><span class="badge bg-primary">{{ cat.product_set.count }} محصول</span></td>
+                            <td><span class="badge bg-primary">{{ cat.product_set.count }} {{ T.products }}</span></td>
                             <td>
-                                <a href="{% url 'admin_category_edit' cat.id %}" class="btn btn-outline-primary btn-sm py-0 px-1">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <a href="{% url 'admin_category_delete' cat.id %}" class="btn btn-outline-danger btn-sm py-0 px-1" onclick="return confirm('آیا از حذف مطمئن هستید؟')">
-                                    <i class="bi bi-trash"></i>
-                                </a>
+                                <a href="{% url 'admin_category_edit' cat.id %}" class="btn btn-outline-primary btn-sm py-0 px-1"><i class="bi bi-pencil"></i></a>
+                                <a href="{% url 'admin_category_delete' cat.id %}" class="btn btn-outline-danger btn-sm py-0 px-1" onclick="return confirm('{{ T.confirm_delete }}')"><i class="bi bi-trash"></i></a>
                             </td>
                         </tr>
                         {% empty %}
-                        <tr>
-                            <td colspan="4" class="text-center py-4 text-muted">دسته بندی وجود ندارد</td>
-                        </tr>
+                        <tr><td colspan="4" class="text-center py-4 text-muted">{{ T.no_categories }}</td></tr>
                         {% endfor %}
                     </tbody>
                 </table>

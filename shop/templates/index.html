@@ -6,20 +6,20 @@
         <header class="bg-gradient-primary py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder fade-in-up">به مازیار شاپ خوش آمدید</h1>
-                    <p class="lead fw-normal text-white-50 mb-4">بهترین قیمت‌ها، بالاترین کیفیت، سریع‌ترین ارسال</p>
+                    <h1 class="display-4 fw-bolder fade-in-up">{{ T.welcome }}</h1>
+                    <p class="lead fw-normal text-white-50 mb-4">{{ T.welcome_sub }}</p>
                     <div class="d-flex justify-content-center gap-3 flex-wrap">
                         <div class="d-flex align-items-center">
                             <i class="bi bi-truck me-2"></i>
-                            <span>ارسال رایگان</span>
+                            <span>{{ T.free_shipping }}</span>
                         </div>
                         <div class="d-flex align-items-center">
                             <i class="bi bi-shield-check me-2"></i>
-                            <span>ضمانت اصالت</span>
+                            <span>{{ T.authenticity }}</span>
                         </div>
                         <div class="d-flex align-items-center">
                             <i class="bi bi-arrow-clockwise me-2"></i>
-                            <span>بازگشت آسان</span>
+                            <span>{{ T.easy_return }}</span>
                         </div>
                     </div>
                 </div>
@@ -35,8 +35,8 @@
                             <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
                                 <i class="bi bi-truck text-white fs-4"></i>
                             </div>
-                            <h5 class="fw-bold">ارسال سریع</h5>
-                            <p class="text-muted">ارسال در کمتر از ۲۴ ساعت به سراسر کشور</p>
+                            <h5 class="fw-bold">{{ T.fast_shipping }}</h5>
+                            <p class="text-muted">{{ T.fast_shipping_desc }}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -44,8 +44,8 @@
                             <div class="bg-success rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
                                 <i class="bi bi-shield-check text-white fs-4"></i>
                             </div>
-                            <h5 class="fw-bold">ضمانت کیفیت</h5>
-                            <p class="text-muted">تمام محصولات دارای ضمانت اصالت و کیفیت</p>
+                            <h5 class="fw-bold">{{ T.quality_guarantee }}</h5>
+                            <p class="text-muted">{{ T.quality_guarantee_desc }}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -53,8 +53,8 @@
                             <div class="bg-warning rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
                                 <i class="bi bi-headset text-white fs-4"></i>
                             </div>
-                            <h5 class="fw-bold">پشتیبانی ۲۴/۷</h5>
-                            <p class="text-muted">پشتیبانی آنلاین در تمام ساعات شبانه‌روز</p>
+                            <h5 class="fw-bold">{{ T.support_247 }}</h5>
+                            <p class="text-muted">{{ T.support_247_desc }}</p>
                         </div>
                     </div>
                 </div>
@@ -65,8 +65,8 @@
         <section class="py-5">
             <div class="container px-4 px-lg-5">
                 <div class="text-center mb-4">
-                    <h2 class="fw-bold text-gradient">محصولات ویژه</h2>
-                    <p class="text-muted">بهترین محصولات با بهترین قیمت‌ها</p>
+                    <h2 class="fw-bold text-gradient">{{ T.special_products }}</h2>
+                    <p class="text-muted">{{ T.special_products_sub }}</p>
                 </div>
 
                 <!-- Filters -->
@@ -75,7 +75,7 @@
                         <form method="GET" action="{% url 'home' %}" class="row g-2 align-items-end">
                             <div class="col-6 col-md-2">
                                 <select class="form-select form-select-sm" name="category">
-                                    <option value="">همه دسته‌ها</option>
+                                    <option value="">{{ T.all_categories }}</option>
                                     {% for cat in categories %}
                                         <option value="{{ cat.name }}" {% if filters.category == cat.name %}selected{% endif %}>{{ cat.name }}</option>
                                     {% endfor %}
@@ -83,31 +83,31 @@
                             </div>
                             <div class="col-6 col-md-2">
                                 <select class="form-select form-select-sm" name="sort">
-                                    <option value="">مرتب سازی</option>
-                                    <option value="price_asc" {% if filters.sort == 'price_asc' %}selected{% endif %}>قیمت ↑</option>
-                                    <option value="price_desc" {% if filters.sort == 'price_desc' %}selected{% endif %}>قیمت ↓</option>
-                                    <option value="rating" {% if filters.sort == 'rating' %}selected{% endif %}>امتیاز</option>
-                                    <option value="newest" {% if filters.sort == 'newest' %}selected{% endif %}>جدیدترین</option>
-                                    <option value="sale" {% if filters.sort == 'sale' %}selected{% endif %}>تخفیف‌دار</option>
+                                    <option value="">{{ T.sort }}</option>
+                                    <option value="price_asc" {% if filters.sort == 'price_asc' %}selected{% endif %}>{{ T.price_low }}</option>
+                                    <option value="price_desc" {% if filters.sort == 'price_desc' %}selected{% endif %}>{{ T.price_high }}</option>
+                                    <option value="rating" {% if filters.sort == 'rating' %}selected{% endif %}>{{ T.rating_sort }}</option>
+                                    <option value="newest" {% if filters.sort == 'newest' %}selected{% endif %}>{{ T.newest }}</option>
+                                    <option value="sale" {% if filters.sort == 'sale' %}selected{% endif %}>{{ T.sale_only }}</option>
                                 </select>
                             </div>
                             <div class="col-6 col-md-2">
-                                <input type="number" class="form-control form-control-sm" name="price_min" placeholder="قیمت از" value="{{ filters.price_min|default:'' }}">
+                                <input type="number" class="form-control form-control-sm" name="price_min" placeholder="{{ T.price_from }}" value="{{ filters.price_min|default:'' }}">
                             </div>
                             <div class="col-6 col-md-2">
-                                <input type="number" class="form-control form-control-sm" name="price_max" placeholder="قیمت تا" value="{{ filters.price_max|default:'' }}">
+                                <input type="number" class="form-control form-control-sm" name="price_max" placeholder="{{ T.price_to }}" value="{{ filters.price_max|default:'' }}">
                             </div>
                             <div class="col-6 col-md-2">
                                 <select class="form-select form-select-sm" name="rating">
-                                    <option value="">همه امتیازها</option>
-                                    <option value="5" {% if filters.rating == '5' %}selected{% endif %}>۵ ستاره</option>
-                                    <option value="4" {% if filters.rating == '4' %}selected{% endif %}>۴ و بالاتر</option>
-                                    <option value="3" {% if filters.rating == '3' %}selected{% endif %}>۳ و بالاتر</option>
+                                    <option value="">{{ T.all_ratings }}</option>
+                                    <option value="5" {% if filters.rating == '5' %}selected{% endif %}>5 {{ T.stars }}</option>
+                                    <option value="4" {% if filters.rating == '4' %}selected{% endif %}>4 {{ T.and_above }}</option>
+                                    <option value="3" {% if filters.rating == '3' %}selected{% endif %}>3 {{ T.and_above }}</option>
                                 </select>
                             </div>
                             <div class="col-6 col-md-2 d-flex gap-1">
                                 <button type="submit" class="btn btn-primary btn-sm flex-grow-1">
-                                    <i class="bi bi-funnel me-1"></i>فیلتر
+                                    <i class="bi bi-funnel me-1"></i>{{ T.filter }}
                                 </button>
                                 <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-sm">
                                     <i class="bi bi-x-lg"></i>
@@ -116,7 +116,7 @@
                         </form>
                     </div>
                 </div>
-                
+
                 {% if products %}
                     <div class="row g-4">
                         {% for item in products %}
@@ -125,26 +125,26 @@
                                     <div class="position-relative">
                                         {% if item.is_sale %}
                                             <div class="badge bg-danger position-absolute" style="top: 10px; right: 10px; z-index: 2;">
-                                                <i class="bi bi-percent me-1"></i>تخفیف ویژه
+                                                <i class="bi bi-percent me-1"></i>{{ T.special_sale }}
                                             </div>
                                         {% endif %}
                                         <img class="card-img-top product-image" src="{{ item.picture.url }}" alt="{{ item.name }}" />
                                         <div class="product-overlay">
                                             <a href="{% url 'product' item.id %}" class="btn btn-primary">
-                                                <i class="bi bi-eye me-1"></i>مشاهده
+                                                <i class="bi bi-eye me-1"></i>{{ T.view }}
                                             </a>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="card-body d-flex flex-column">
                                         <div class="mb-2">
                                             <span class="badge bg-light text-dark">{{ item.category }}</span>
                                         </div>
-                                        
+
                                         <h6 class="card-title fw-bold mb-2">{{ item.name }}</h6>
-                                        
+
                                         <div class="star-container justify-content-center small text-warning mb-3">
-                                            {% with ''|center:item.star as range %} 
+                                            {% with ''|center:item.star as range %}
                                                 {% for _ in range %}
                                                     <i class="bi bi-star-fill"></i>
                                                 {% endfor %}
@@ -155,22 +155,22 @@
                                                 {% endfor %}
                                             {% endif %}
                                         </div>
-                                        
+
                                         <div class="text-center mb-3">
                                             {% if item.is_sale and item.sale_price > 0 %}
                                                 <div class="d-flex justify-content-center align-items-center gap-2">
                                                     <span class="text-muted text-decoration-line-through small">{{ item.price|intcomma }}</span>
                                                     <span class="fw-bold text-danger fs-5">{{ item.sale_price|intcomma }}</span>
-                                                    <span class="text-muted small">تومان</span>
+                                                    <span class="text-muted small">{{ T.toman }}</span>
                                                 </div>
                                             {% else %}
-                                                <span class="fw-bold text-primary fs-5">{{ item.price|intcomma }} تومان</span>
+                                                <span class="fw-bold text-primary fs-5">{{ item.price|intcomma }} {{ T.toman }}</span>
                                             {% endif %}
                                         </div>
-                                        
+
                                         <div class="mt-auto">
                                             <a href="{% url 'product' item.id %}" class="btn btn-outline-primary w-100">
-                                                <i class="bi bi-cart-plus me-1"></i>افزودن به سبد
+                                                <i class="bi bi-cart-plus me-1"></i>{{ T.add_to_cart }}
                                             </a>
                                         </div>
                                     </div>
@@ -183,8 +183,8 @@
                         <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
                             <i class="bi bi-box text-muted fs-1"></i>
                         </div>
-                        <h4 class="text-muted">محصولی یافت نشد</h4>
-                        <p class="text-muted">در حال حاضر محصولی برای نمایش وجود ندارد</p>
+                        <h4 class="text-muted">{{ T.no_products }}</h4>
+                        <p class="text-muted">{{ T.no_products_desc }}</p>
                     </div>
                 {% endif %}
             </div>
@@ -196,15 +196,15 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <h4 class="fw-bold mb-2">
-                            <i class="bi bi-envelope me-2"></i>عضویت در خبرنامه
+                            <i class="bi bi-envelope me-2"></i>{{ T.newsletter }}
                         </h4>
-                        <p class="mb-0">از آخرین تخفیف‌ها و محصولات جدید باخبر شوید</p>
+                        <p class="mb-0">{{ T.newsletter_sub }}</p>
                     </div>
                     <div class="col-md-6">
                         <form id="newsletter-form" class="input-group">
-                            <input type="email" class="form-control" id="newsletter-email" placeholder="ایمیل خود را وارد کنید" required>
+                            <input type="email" class="form-control" id="newsletter-email" placeholder="{{ T.email_placeholder }}" required>
                             <button class="btn btn-warning" type="submit">
-                                <i class="bi bi-send me-1"></i>عضویت
+                                <i class="bi bi-send me-1"></i>{{ T.subscribe }}
                             </button>
                         </form>
                         <div id="newsletter-message" class="mt-2" style="display:none;"></div>
@@ -291,10 +291,10 @@
     .product-image {
         height: 150px;
     }
-    
+
     .display-4 {
         font-size: 2rem;
     }
 }
 </style>
-{% endblock %}        
+{% endblock %}
