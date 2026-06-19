@@ -1,3 +1,5 @@
+English Version | [نسخه فارسی](README.md)
+
 # Maziyar Shop | مازیار شاپ
 
 Maziyar Shop — A full-featured e-commerce web application built with Django
