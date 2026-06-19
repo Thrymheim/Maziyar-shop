@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{% if editing %}ویرایش دسته بندی{% else %}افزودن دسته بندی{% endif %} - پنل مدیریت{% endblock %}
+
+{% block content %}
+<div class="container py-4 px-3 px-md-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 small">
+                        {% if editing %}
+                            <i class="bi bi-pencil me-2"></i>ویرایش دسته بندی
+                        {% else %}
+                            <i class="bi bi-plus-circle me-2"></i>افزودن دسته بندی جدید
+                        {% endif %}
+                    </h5>
+                    <a href="{% url 'admin_categories_list' %}" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-arrow-right me-1"></i>بازگشت
+                    </a>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label small">نام دسته بندی *</label>
+                            <input type="text" class="form-control" name="name" value="{{ category.name|default:'' }}" required placeholder="مثال: موبایل">
+                        </div>
+                        <button type="submit" class="btn btn-success btn-lg w-100 w-md-auto">
+                            <i class="bi bi-check-lg me-1"></i>{% if editing %}ذخیره تغییرات{% else %}افزودن دسته بندی{% endif %}
+                        </button>
+                        <a href="{% url 'admin_categories_list' %}" class="btn btn-outline-secondary btn-lg w-100 w-md-auto mt-2 mt-md-0 me-md-2">لغو</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

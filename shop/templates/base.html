@@ -1,0 +1,357 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="فروشگاه آنلاین مازیار شاپ - خرید آسان و مطمئن" />
+        <meta name="author" content="Digikala Team" />
+        <title>{% block title %}مازیار شاپ - فروشگاه آنلاین{% endblock %}</title>
+        
+        <!-- Favicon-->
+        <link rel="icon" type="image/png" href="https://www.clipartmax.com/png/middle/291-2915631_e-store-bd-favicon-online-shopping.png" />
+        
+        <!-- Bootstrap icons (local) -->
+        <link href="{% static 'assets/icons/bootstrap-icons.css' %}" rel="stylesheet" />
+        
+        <!-- Vazirmatn font (local) -->
+        <link href="{% static 'fonts/Vazirmatn-font-face.css' %}" rel="stylesheet">
+        <!-- Bootstrap CSS (local) -->
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+        
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        
+        <!-- jQuery (local) -->
+        <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+        
+        <!-- Custom Meta Tags -->
+        <meta name="theme-color" content="#e91e63">
+        <meta name="msapplication-TileColor" content="#e91e63">
+        
+        <!-- Additional Styles -->
+        <style>
+            body {
+                font-family: 'Vazirmatn', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+            
+            .bg-gradient-primary {
+                background: linear-gradient(135deg, #e91e63, #c2185b) !important;
+            }
+            
+            .fade-in-up {
+                animation: fadeInUp 0.6s ease-out;
+            }
+            
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            
+
+            /* Dark Theme Variables */
+            [data-theme="dark"] {
+                --bs-body-bg: #1a1a2e;
+                --bs-body-color: #e0e0e0;
+                --bs-card-bg: #16213e;
+                --bs-border-color: #2a2a4a;
+            }
+
+            [data-theme="dark"] body {
+                background-color: #1a1a2e !important;
+                color: #e0e0e0 !important;
+            }
+
+            [data-theme="dark"] .card {
+                background-color: #16213e !important;
+                color: #e0e0e0 !important;
+            }
+
+            [data-theme="dark"] .card-body {
+                color: #e0e0e0 !important;
+            }
+
+            [data-theme="dark"] .card-title {
+                color: #ffffff !important;
+            }
+
+            [data-theme="dark"] .bg-light {
+                background-color: #1a1a2e !important;
+            }
+
+            [data-theme="dark"] .text-muted {
+                color: #a0a0a0 !important;
+            }
+
+            [data-theme="dark"] .form-control {
+                background-color: #2a2a4a !important;
+                border-color: #3a3a5a !important;
+                color: #e0e0e0 !important;
+            }
+
+            [data-theme="dark"] .dropdown-menu {
+                background-color: #16213e !important;
+                border-color: #2a2a4a !important;
+            }
+
+            [data-theme="dark"] .dropdown-item {
+                color: #e0e0e0 !important;
+            }
+
+            [data-theme="dark"] .dropdown-item:hover {
+                background-color: #e91e63 !important;
+                color: white !important;
+            }
+
+            [data-theme="dark"] footer {
+                background: linear-gradient(135deg, #0f0f23, #1a1a2e) !important;
+            }
+
+            [data-theme="dark"] .badge.bg-light {
+                background-color: #2a2a4a !important;
+                color: #e0e0e0 !important;
+            }
+
+        </style>
+        
+        {% block extra_css %}{% endblock %}
+    </head>
+    <body dir="rtl" class="d-flex flex-column min-vh-100">
+
+        {% include 'navbar.html' %}
+        
+        <!-- Messages -->
+        {% if messages %}
+           {% for message in messages %}
+           <div class="container mt-3">
+               <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show shadow-sm" role="alert">
+                   <i class="bi bi-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' or message.tags == 'danger' %}exclamation-triangle{% else %}info-circle{% endif %} me-2"></i>
+                   {{ message }}
+                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="بستن"></button>
+               </div>
+           </div>
+           {% endfor %}
+        {% endif %}   
+
+        <!-- Main Content -->
+        <main class="flex-grow-1">
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <!-- Footer-->
+        <footer class="bg-gradient-dark text-white py-5 mt-auto" style="background: linear-gradient(135deg, #2c3e50, #34495e) !important;">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-shop fs-3 me-3 text-warning"></i>
+                            <h5 class="fw-bold mb-0">مازیار شاپ</h5>
+                        </div>
+                        <p class="text-light mb-4">
+                            فروشگاه آنلاین معتبر با بهترین قیمت‌ها و کیفیت بالا. 
+                            خرید آسان و مطمئن از هزاران محصول متنوع.
+                        </p>
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-outline-light btn-social" title="تلگرام">
+                                <i class="bi bi-telegram"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-light btn-social" title="اینستاگرام">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-light btn-social" title="واتساپ">
+                                <i class="bi bi-whatsapp"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-light btn-social" title="یوتیوب">
+                                <i class="bi bi-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-2 col-md-6">
+                        <h6 class="fw-bold mb-3 text-warning">دسترسی سریع</h6>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <a href="{% url 'home' %}" class="text-light text-decoration-none d-flex align-items-center">
+                                    <i class="bi bi-house me-2"></i>خانه
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="{% url 'about' %}" class="text-light text-decoration-none d-flex align-items-center">
+                                    <i class="bi bi-info-circle me-2"></i>درباره ما
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="{% url 'contact' %}" class="text-light text-decoration-none d-flex align-items-center">
+                                    <i class="bi bi-telephone me-2"></i>تماس با ما
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="{% url 'terms' %}" class="text-light text-decoration-none d-flex align-items-center">
+                                    <i class="bi bi-file-text me-2"></i>قوانین و مقررات
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6">
+                        <h6 class="fw-bold mb-3 text-warning">تماس با ما</h6>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-telephone-fill me-3 text-warning"></i>
+                            <div>
+                                <div class="text-light">۰۲۱-۱۲۳۴۵۶۷۸</div>
+                                <small class="text-muted">پشتیبانی ۲۴ ساعته</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-envelope-fill me-3 text-warning"></i>
+                            <div>
+                                <div class="text-light">digikala@gmail.com</div>
+                                <small class="text-muted">ایمیل پشتیبانی</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-geo-alt-fill me-3 text-warning"></i>
+                            <div>
+                                <div class="text-light">مازندران، ایران</div>
+                                <small class="text-muted">دفتر مرکزی</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <hr class="my-4 border-secondary">
+                
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p class="mb-0 text-light d-flex align-items-center">
+                            <i class="bi bi-c-circle me-2"></i>
+                             طراحی شده توسط مازیار کلاگر. 
+
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Bootstrap core JS (local) -->
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+        
+        <!-- Core theme JS-->
+        <script src="{% static 'js/scripts.js' %}"></script>
+        
+        <!-- Custom JavaScript -->
+        <script>
+            // Theme Toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            const html = document.documentElement;
+
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            html.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    const currentTheme = html.getAttribute('data-theme');
+                    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                    html.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                    updateThemeIcon(newTheme);
+                });
+            }
+
+            function updateThemeIcon(theme) {
+                if (themeIcon) {
+                    themeIcon.className = theme === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
+                }
+            }
+
+            // Newsletter Subscribe
+            const newsletterForm = document.getElementById('newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const email = document.getElementById('newsletter-email').value;
+                    const messageDiv = document.getElementById('newsletter-message');
+                    
+                    fetch("{% url 'newsletter_subscribe' %}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: 'email=' + encodeURIComponent(email)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        messageDiv.style.display = 'block';
+                        if (data.success) {
+                            messageDiv.className = 'alert alert-success';
+                            messageDiv.textContent = data.message;
+                            document.getElementById('newsletter-email').value = '';
+                        } else {
+                            messageDiv.className = 'alert alert-danger';
+                            messageDiv.textContent = data.error;
+                        }
+                    })
+                    .catch(error => {
+                        messageDiv.style.display = 'block';
+                        messageDiv.className = 'alert alert-danger';
+                        messageDiv.textContent = 'خطایی رخ داد. لطفاً دوباره تلاش کنید.';
+                    });
+                });
+            }
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Auto-hide alerts after 5 seconds
+            setTimeout(function() {
+                const alerts = document.querySelectorAll('.alert');
+                alerts.forEach(function(alert) {
+                    const bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                });
+            }, 5000);
+
+            // Improved form validation and button loading
+            document.querySelectorAll('form.needs-validation').forEach(form => {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        form.classList.add('was-validated');
+                    } else {
+                        const submitBtn = form.querySelector('button[type="submit"]');
+                        if (submitBtn) {
+                            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>در حال پردازش...';
+                            submitBtn.disabled = true;
+                        }
+                    }
+                }, false);
+            });
+        </script>
+        
+        {% block extra_js %}{% endblock %}
+    </body>

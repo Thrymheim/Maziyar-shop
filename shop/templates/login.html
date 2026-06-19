@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Header-->
+<header class="bg-gradient-primary py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder fade-in-up">خوش آمدید</h1>
+            <p class="lead fw-normal text-white-50 mb-0">وارد حساب کاربری خود شوید</p>
+        </div>
+    </div>
+</header>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-10">
+            <div class="card shadow-custom border-0">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <i class="bi bi-person-fill text-white" style="font-size: 1.5rem;"></i>
+                        </div>
+                        <h3 class="fw-bold text-gradient">ورود به حساب کاربری</h3>
+                        <p class="text-muted">اطلاعات خود را وارد کنید</p>
+                    </div>
+                    
+                    <form method="POST" action="{% url 'login' %}" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        <div class="mb-4">
+                            <label for="username" class="form-label fw-semibold">
+                                <i class="bi bi-person me-2"></i>نام کاربری
+                            </label>
+                            <input type="text" 
+                                   class="form-control form-control-lg" 
+                                   id="username" 
+                                   name="username" 
+                                   placeholder="نام کاربری خود را وارد کنید"
+                                   required>
+                            <div class="invalid-feedback">
+                                لطفاً نام کاربری خود را وارد کنید
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="password" class="form-label fw-semibold">
+                                <i class="bi bi-lock me-2"></i>رمز عبور
+                            </label>
+                            <div class="input-group">
+                                <input type="password" 
+                                       class="form-control form-control-lg" 
+                                       id="password" 
+                                       name="password" 
+                                       placeholder="رمز عبور خود را وارد کنید"
+                                       required>
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                    <i class="bi bi-eye" id="toggleIcon"></i>
+                                </button>
+                            </div>
+                            <div class="invalid-feedback">
+                                لطفاً رمز عبور خود را وارد کنید
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">
+                                مرا به خاطر بسپار
+                            </label>
+                        </div>
+                        
+                        <div class="d-grid mb-4">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>
+                                ورود به حساب کاربری
+                            </button>
+                        </div>
+                        
+                        <div class="text-center">
+                            <p class="mb-0">حساب کاربری ندارید؟ 
+                                <a href="{% url 'signup' %}" class="text-primary fw-semibold text-decoration-none">
+                                    همین حالا ثبت نام کنید
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Password toggle functionality
+document.getElementById('togglePassword').addEventListener('click', function() {
+    const passwordField = document.getElementById('password');
+    const toggleIcon = document.getElementById('toggleIcon');
+    
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        toggleIcon.className = 'bi bi-eye-slash';
+    } else {
+        passwordField.type = 'password';
+        toggleIcon.className = 'bi bi-eye';
+    }
+});
+
+
+
+</script>
+
+{% endblock %}
