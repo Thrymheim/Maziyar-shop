@@ -1,7 +1,7 @@
 {% load static %}
 {% load humanize %}
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="{{ lang }}" dir="{% if lang == 'en' %}ltr{% else %}rtl{% endif %}">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -34,6 +34,10 @@
         <style>
             body {
                 font-family: 'Vazirmatn', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            [dir="ltr"] body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
             
             .bg-gradient-primary {
@@ -97,6 +101,13 @@
                 color: #e0e0e0 !important;
             }
 
+            [data-theme="dark"] .rounded-start-pill,
+            [data-theme="dark"] .rounded-start-pill:focus {
+                background-color: #f8f9fa !important;
+                color: #333 !important;
+                border-color: #dee2e6 !important;
+            }
+
             [data-theme="dark"] .dropdown-menu {
                 background-color: #16213e !important;
                 border-color: #2a2a4a !important;
@@ -119,12 +130,48 @@
                 background-color: #2a2a4a !important;
                 color: #e0e0e0 !important;
             }
+            .navbar {
+    background: white !important;
+}
 
+.navbar-brand {
+    color: #e6123d !important;
+}
+
+.nav-link {
+    color: #424750 !important;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: #e6123d !important;
+}
+
+.form-control {
+    height: 46px;
+}
+
+.input-group button {
+    height: 46px;
+}
+
+.dropdown-menu {
+    border-radius: 12px;
+}
+
+.btn-light {
+    background: #f5f5f5;
+    border: none;
+}
+
+.btn-light:hover {
+    background: #ececec;
+}
         </style>
         
         {% block extra_css %}{% endblock %}
     </head>
-    <body dir="rtl" class="d-flex flex-column min-vh-100">
+    <body dir="{% if lang == 'en' %}ltr{% else %}rtl{% endif %}" class="d-flex flex-column min-vh-100">
 
         {% include 'navbar.html' %}
         
@@ -352,3 +399,5 @@
         
         {% block extra_js %}{% endblock %}
     </body>
+
+

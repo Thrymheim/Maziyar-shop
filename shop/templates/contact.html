@@ -1,13 +1,13 @@
 {% extends "base.html" %}
-{% block title %}تماس با ما - مازیار شاپ{% endblock %}
+{% block title %}{{ T.contact_title }}{% endblock %}
 
 {% block content %}
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="text-center mb-5">
-                <h2 class="fw-bold"><i class="bi bi-envelope me-2"></i>تماس با ما</h2>
-                <p class="text-muted">ما آماده شنیدن نظرات و پیشنهادات شما هستیم</p>
+                <h2 class="fw-bold"><i class="bi bi-envelope me-2"></i>{{ T.contact_title }}</h2>
+                <p class="text-muted">{{ T.contact_sub }}</p>
             </div>
 
             <div class="row">
@@ -17,7 +17,7 @@
                             <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
                                 <i class="bi bi-telephone text-white fs-4"></i>
                             </div>
-                            <h6 class="fw-bold">تلفن</h6>
+                            <h6 class="fw-bold">{{ T.phone }}</h6>
                             <p class="text-muted mb-0">۰۲۱-۱۲۳۴۵۶۷۸</p>
                         </div>
                     </div>
@@ -28,8 +28,8 @@
                             <div class="bg-success rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
                                 <i class="bi bi-envelope text-white fs-4"></i>
                             </div>
-                            <h6 class="fw-bold">ایمیل</h6>
-                            <p class="text-muted mb-0">digikala@gmail.com</p>
+                            <h6 class="fw-bold">{{ T.email }}</h6>
+                            <p class="text-muted mb-0">maziyar@gmail.com</p>
                         </div>
                     </div>
                 </div>
@@ -39,8 +39,8 @@
                             <div class="bg-warning rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
                                 <i class="bi bi-geo-alt text-white fs-4"></i>
                             </div>
-                            <h6 class="fw-bold">آدرس</h6>
-                            <p class="text-muted mb-0">مازندران، ایران</p>
+                            <h6 class="fw-bold">{{ T.address }}</h6>
+                            <p class="text-muted mb-0">Mazandaran, Iran</p>
                         </div>
                     </div>
                 </div>
@@ -48,29 +48,29 @@
 
             <div class="card shadow-sm mt-4">
                 <div class="card-body">
-                    <h5 class="mb-4">ارسال پیام</h5>
+                    <h5 class="mb-4">{{ T.send_message }}</h5>
                     <form method="POST">
                         {% csrf_token %}
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label class="form-label">نام</label>
-                                <input type="text" class="form-control" name="name" required placeholder="نام خود را وارد کنید">
+                                <label class="form-label">{{ T.first_name }}</label>
+                                <input type="text" class="form-control" name="name" required placeholder="{{ T.your_name }}">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">ایمیل</label>
-                                <input type="email" class="form-control" name="email" required placeholder="ایمیل خود را وارد کنید">
+                                <label class="form-label">{{ T.email }}</label>
+                                <input type="email" class="form-control" name="email" required placeholder="{{ T.your_email }}">
                             </div>
                             <div class="col-12">
-                                <label class="form-label">موضوع</label>
-                                <input type="text" class="form-control" name="subject" placeholder="موضوع پیام">
+                                <label class="form-label">{{ T.subject }}</label>
+                                <input type="text" class="form-control" name="subject" placeholder="{{ T.your_subject }}">
                             </div>
                             <div class="col-12">
-                                <label class="form-label">پیام</label>
-                                <textarea class="form-control" name="message" rows="5" required placeholder="پیام خود را بنویسید..."></textarea>
+                                <label class="form-label">{{ T.message }}</label>
+                                <textarea class="form-control" name="message" rows="5" required placeholder="{{ T.your_message }}"></textarea>
                             </div>
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary btn-lg">
-                                    <i class="bi bi-send me-1"></i>ارسال پیام
+                                    <i class="bi bi-send me-1"></i>{{ T.send }}
                                 </button>
                             </div>
                         </div>

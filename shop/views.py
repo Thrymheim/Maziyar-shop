@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django import forms
-from .forms import SignUpForm
+from .forms import SignUpForm, SignUpFormFa
 from django.http import JsonResponse
 from django.db.models import Q
 from .translations import TRANSLATIONS
@@ -164,9 +164,11 @@ def logout_user(request):
 
 
 def signup_user(request):
-    
+    lang = request.session.get('language', 'fa')
+    FormClass = SignUpForm if lang == 'en' else SignUpFormFa
+
     if request.method == "POST":
-        form = SignUpForm(request.POST)
+        form = FormClass(request.POST)
 
         if form.is_valid():
             form.save()
@@ -185,7 +187,7 @@ def signup_user(request):
             return render(request, 'signup.html', {'form': form})
 
     else:
-        form = SignUpForm()
+        form = FormClass()
         return render(request, 'signup.html', {'form': form})
 
 

@@ -2,143 +2,115 @@
 {% load static %}
 {% load humanize %}
 {% block content %}
-        <!-- Header-->
-        <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">سبد خرید شما</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">خرید خود را نهایی کنید !</p>
-                </div>
-            </div>
-        </header>
-        <br>
-        {% if cart_products %}
-        {% for product in cart_products %}
-        <div class="container">
-            <div class="card mb-3">
-                <div class="row g-0">
-                  <div class="col-md-4">
-                    <img src="{{ product.picture.url }}" class="img-fluid rounded-start" alt="...">
-                  </div>
-                  <div class="col-md-8">
-                    <div class="card-body">
-                      <h5 class="card-title">{{ product.name }}</h5><br>
-                      <p class="card-text">📌 توضیحات محصول :  {{ product.discription }}</p>
-                      
-                      {% if product.is_sale and product.sale_price > 0 %}
-                        <p class="card-text">
-                             
-                             💰 قیمت :  <strike>{{ product.price | intcomma }} تومان</strike> __ {{ product.sale_price | intcomma }} تومان
-                        </p>
-                      {% else %}
-                       <p class="card-text">💰 قیمت : {{ product.price | intcomma }} تومان</p>
-                      {% endif %}
-                       
-
-                      <p class="card-text"> 🚚 ارسال مازیار شاپ</p>
-                      <p class="card-text">تعداد :
-
-                        <select class="form-select" id="select{{product.id}}">
-                        {% for key,value in quantities.items %}
-                          {% if key == product.id|slugify %}
-                            <option selected>{{ value }}</option>
-                          {% endif %} 
-                        {% endfor %} 
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                        </select>
-
-                         
-                      </p>
-                      <br>
-                      <button type="button" data-index={{product.id}} class="btn btn-primary update-cart">ویرایش</button>
-                      <button type="button" data-index={{product.id}} class="btn btn-danger
-                       delete-product">حذف</button>
-                      <a  href="{% url 'home'  %}" class="btn btn-secondary">بازگشت به صفحه اصلی</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">{{ T.cart }}</h1>
+            <p class="lead fw-normal text-white-50 mb-0">{% if lang == 'en' %}Complete your purchase!{% else %}خرید خود را نهایی کنید !{% endif %}</p>
         </div>
-        {% endfor %}
-        {% else %}
-        <br><br>
-         <center> <h3 class="container"> سبد خرید شما خالی است &#128531;</h3></center>
-        {% endif %}
+    </div>
+</header>
+<br>
+{% if cart_products %}
+{% for product in cart_products %}
+<div class="container">
+    <div class="card mb-3">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{ product.picture.url }}" class="img-fluid rounded-start" alt="{{ product.name }}">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }}</h5><br>
+              <p class="card-text">{% if lang == 'en' %}Description:{% else %}📌 توضیحات محصول :{% endif %} {{ product.discription }}</p>
+
+              {% if product.is_sale and product.sale_price > 0 %}
+                <p class="card-text">
+                    {% if lang == 'en' %}Price:{% else %}💰 قیمت :{% endif %}
+                    <strike>{{ product.price|intcomma }} {{ T.toman }}</strike> — {{ product.sale_price|intcomma }} {{ T.toman }}
+                </p>
+              {% else %}
+                <p class="card-text">{% if lang == 'en' %}Price:{% else %}💰 قیمت :{% endif %} {{ product.price|intcomma }} {{ T.toman }}</p>
+              {% endif %}
+
+              <p class="card-text">🚚 {% if lang == 'en' %}Maziyar Shop Shipping{% else %}ارسال مازیار شاپ{% endif %}</p>
+              <p class="card-text">{% if lang == 'en' %}Quantity:{% else %}تعداد :{% endif %}
+                <select class="form-select" id="select{{product.id}}">
+                {% for key,value in quantities.items %}
+                  {% if key == product.id|slugify %}
+                    <option selected>{{ value }}</option>
+                  {% endif %}
+                {% endfor %}
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+              </p>
+              <br>
+              <button type="button" data-index={{product.id}} class="btn btn-primary update-cart">{{ T.save_changes }}</button>
+              <button type="button" data-index={{product.id}} class="btn btn-danger delete-product">{{ T.delete }}</button>
+              <a href="{% url 'home' %}" class="btn btn-secondary">{{ T.back }}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+{% endfor %}
+{% else %}
+<br><br>
+<center><h3 class="container">{{ T.empty_cart }} &#128531;</h3></center>
+{% endif %}
 <br><br><br><br><br><br>
 <script>
-
-  $(document).on('click' , '.update-cart' , function(e){
-  
+$(document).on('click', '.update-cart', function(e){
     e.preventDefault();
-
-    var productid = $(this).data('index')
+    var productid = $(this).data('index');
     $.ajax({
-      type: 'POST' ,
-      url: "{% url 'cart_update' %}",
-      data:{
-        product_id : $(this).data('index'),
-        product_qty : $('#select' + productid + ' option:selected').text(),
-
-        csrfmiddlewaretoken : '{{ csrf_token }}' ,
-        action : 'post'
-      },
-      success: function(json){
-        //console.log(json)
-        //برای نمایش تعداد محصولqty
-        //document.getElementById('cart_quantity').textContent = json.qty
-        location.reload();
-      },
-
-      error: function(xhr , errmsg , err){
-        if (xhr.status === 401) {
-          alert('لطفاً ابتدا وارد شوید!');
-          window.location.href = "{% url 'login' %}";
-        } else {
-          alert('خطایی رخ داد. لطفاً دوباره تلاش کنید.');
+        type: 'POST',
+        url: "{% url 'cart_update' %}",
+        data:{
+            product_id: $(this).data('index'),
+            product_qty: $('#select' + productid + ' option:selected').text(),
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            action: 'post'
+        },
+        success: function(json){
+            location.reload();
+        },
+        error: function(xhr, errmsg, err){
+            if (xhr.status === 401) {
+                alert('{% if lang == "en" %}Please login first!{% else %}لطفاً ابتدا وارد شوید!{% endif %}');
+                window.location.href = "{% url 'login' %}";
+            } else {
+                alert('{% if lang == "en" %}An error occurred. Please try again.{% else %}خطایی رخ داد. لطفاً دوباره تلاش کنید.{% endif %}');
+            }
         }
-      }
     });
-  
-  });
+});
 
-  $(document).on('click' , '.delete-product' , function(e){
-  
+$(document).on('click', '.delete-product', function(e){
     e.preventDefault();
-
-
     $.ajax({
-      type: 'POST' ,
-      url: "{% url 'cart_delete' %}",
-      data:{
-        product_id : $(this).data('index'),
-        csrfmiddlewaretoken : '{{ csrf_token }}' ,
-        action : 'post'
-      },
-      success: function(json){
-        //console.log(json)
-        //برای نمایش تعداد محصولqty
-        //document.getElementById('cart_quantity').textContent = json.qty
-        location.reload();
-      },
-
-      error: function(xhr , errmsg , err){
-        if (xhr.status === 401) {
-          alert('لطفاً ابتدا وارد شوید!');
-          window.location.href = "{% url 'login' %}";
-        } else {
-          alert('خطایی رخ داد. لطفاً دوباره تلاش کنید.');
+        type: 'POST',
+        url: "{% url 'cart_delete' %}",
+        data:{
+            product_id: $(this).data('index'),
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            action: 'post'
+        },
+        success: function(json){
+            location.reload();
+        },
+        error: function(xhr, errmsg, err){
+            if (xhr.status === 401) {
+                alert('{% if lang == "en" %}Please login first!{% else %}لطفاً ابتدا وارد شوید!{% endif %}');
+                window.location.href = "{% url 'login' %}";
+            } else {
+                alert('{% if lang == "en" %}An error occurred. Please try again.{% else %}خطایی رخ داد. لطفاً دوباره تلاش کنید.{% endif %}');
+            }
         }
-      }
     });
-  
-  });
-  
-  </script>
-
-
-
-{% endblock %}        
-
+});
+</script>
+{% endblock %}

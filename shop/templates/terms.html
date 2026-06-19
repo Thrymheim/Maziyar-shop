@@ -1,15 +1,13 @@
 {% extends "base.html" %}
-
-{% block title %}قوانین و مقررات - مازیار شاپ{% endblock %}
+{% block title %}{{ T.terms_title }}{% endblock %}
 
 {% block content %}
 
-<!-- Header-->
 <header class="bg-gradient-primary py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder fade-in-up">قوانین و مقررات</h1>
-            <p class="lead fw-normal text-white-50 mb-0">شرایط استفاده از خدمات مازیار شاپ</p>
+            <h1 class="display-4 fw-bolder fade-in-up">{{ T.terms_title }}</h1>
+            <p class="lead fw-normal text-white-50 mb-0">{{ T.terms_sub }}</p>
         </div>
     </div>
 </header>
@@ -19,114 +17,100 @@
         <div class="col-lg-10">
             <div class="card shadow-custom border-0">
                 <div class="card-body p-5">
-                    <div class="text-center mb-5">
-                        <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                            <i class="bi bi-file-text-fill text-white" style="font-size: 1.5rem;"></i>
-                        </div>
-                        <h3 class="fw-bold text-gradient">قوانین و مقررات استفاده</h3>
-                        <p class="text-muted">آخرین بروزرسانی: {{ "now"|date:"Y/m/d" }}</p>
-                    </div>
-                    
-                    <div class="terms-content">
+                    <div class="terms-content" dir="{% if lang == 'en' %}ltr{% else %}rtl{% endif %}">
+
                         <section class="mb-5">
                             <h4 class="fw-bold text-primary mb-3">
-                                <i class="bi bi-1-circle me-2"></i>قبول شرایط
+                                <i class="bi bi-1-circle me-2"></i>{% if lang == 'en' %}Acceptance of Terms{% else %}قبول شرایط{% endif %}
                             </h4>
                             <p class="text-muted lh-lg">
-                                با استفاده از وب‌سایت مازیار شاپ، شما موافقت خود را با تمامی قوانین و مقررات اعلام می‌دارید. 
+                                {% if lang == 'en' %}
+                                By using the Maziyar Shop website, you agree to all terms and conditions. If you do not agree with any of these conditions, please refrain from using the website.
+                                {% else %}
+                                با استفاده از وب‌سایت مازیار شاپ، شما موافقت خود را با تمامی قوانین و مقررات اعلام می‌دارید.
                                 در صورت عدم موافقت با هر یک از این شرایط، لطفاً از استفاده از وب‌سایت خودداری کنید.
+                                {% endif %}
                             </p>
                         </section>
 
                         <section class="mb-5">
                             <h4 class="fw-bold text-primary mb-3">
-                                <i class="bi bi-2-circle me-2"></i>حساب کاربری
+                                <i class="bi bi-2-circle me-2"></i>{% if lang == 'en' %}User Account{% else %}حساب کاربری{% endif %}
                             </h4>
                             <div class="text-muted lh-lg">
-                                <p>برای استفاده از خدمات ما، باید:</p>
+                                <p>{% if lang == 'en' %}To use our services, you must:{% else %}برای استفاده از خدمات ما، باید:{% endif %}</p>
                                 <ul class="list-unstyled">
-                                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>اطلاعات صحیح و کامل ارائه دهید</li>
-                                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>رمز عبور قوی انتخاب کنید</li>
-                                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>اطلاعات حساب خود را به‌روز نگه دارید</li>
-                                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>مسئولیت امنیت حساب خود را بر عهده بگیرید</li>
+                                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>{% if lang == 'en' %}Provide accurate and complete information{% else %}اطلاعات صحیح و کامل ارائه دهید{% endif %}</li>
+                                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>{% if lang == 'en' %}Choose a strong password{% else %}رمز عبور قوی انتخاب کنید{% endif %}</li>
+                                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>{% if lang == 'en' %}Keep your account information up to date{% else %}اطلاعات حساب خود را به‌روز نگه دارید{% endif %}</li>
+                                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>{% if lang == 'en' %}Take responsibility for your account security{% else %}مسئولیت امنیت حساب خود را بر عهده بگیرید{% endif %}</li>
                                 </ul>
                             </div>
                         </section>
 
                         <section class="mb-5">
                             <h4 class="fw-bold text-primary mb-3">
-                                <i class="bi bi-3-circle me-2"></i>خرید و فروش
+                                <i class="bi bi-3-circle me-2"></i>{% if lang == 'en' %}Shopping{% else %}خرید و فروش{% endif %}
                             </h4>
                             <div class="text-muted lh-lg">
-                                <p>قوانین خرید از مازیار شاپ:</p>
+                                <p>{% if lang == 'en' %}Shopping rules:{% else %}قوانین خرید از مازیار شاپ:{% endif %}</p>
                                 <ul class="list-unstyled">
-                                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>تمام قیمت‌ها به تومان و شامل مالیات است</li>
-                                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>امکان بازگشت کالا تا ۷ روز پس از تحویل</li>
-                                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>ارسال رایگان برای خریدهای بالای ۵۰۰ هزار تومان</li>
-                                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>ضمانت اصالت و کیفیت تمامی محصولات</li>
+                                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>{% if lang == 'en' %}All prices are in Toman and include tax{% else %}تمام قیمت‌ها به تومان و شامل مالیات است{% endif %}</li>
+                                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>{% if lang == 'en' %}Returns accepted within 7 days of delivery{% else %}امکان بازگشت کالا تا ۷ روز پس از تحویل{% endif %}</li>
+                                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>{% if lang == 'en' %}Free shipping for orders over 500,000 Toman{% else %}ارسال رایگان برای خریدهای بالای ۵۰۰ هزار تومان{% endif %}</li>
+                                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>{% if lang == 'en' %}Authenticity and quality guarantee for all products{% else %}ضمانت اصالت و کیفیت تمامی محصولات{% endif %}</li>
                                 </ul>
                             </div>
                         </section>
 
                         <section class="mb-5">
                             <h4 class="fw-bold text-primary mb-3">
-                                <i class="bi bi-4-circle me-2"></i>حریم خصوصی
+                                <i class="bi bi-4-circle me-2"></i>{% if lang == 'en' %}Privacy{% else %}حریم خصوصی{% endif %}
                             </h4>
                             <p class="text-muted lh-lg">
-                                ما متعهد به حفظ حریم خصوصی شما هستیم. اطلاعات شخصی شما تنها برای ارائه خدمات بهتر 
+                                {% if lang == 'en' %}
+                                We are committed to protecting your privacy. Your personal information is only used to provide better services and improve your shopping experience and will not be shared with third parties.
+                                {% else %}
+                                ما متعهد به حفظ حریم خصوصی شما هستیم. اطلاعات شخصی شما تنها برای ارائه خدمات بهتر
                                 و بهبود تجربه خرید استفاده می‌شود و در اختیار اشخاص ثالث قرار نخواهد گرفت.
+                                {% endif %}
                             </p>
                         </section>
 
                         <section class="mb-5">
                             <h4 class="fw-bold text-primary mb-3">
-                                <i class="bi bi-5-circle me-2"></i>مسئولیت‌ها
+                                <i class="bi bi-5-circle me-2"></i>{% if lang == 'en' %}Responsibilities{% else %}مسئولیت‌ها{% endif %}
                             </h4>
                             <div class="text-muted lh-lg">
-                                <p>کاربران موظفند:</p>
+                                <p>{% if lang == 'en' %}Users must:{% else %}کاربران موظفند:{% endif %}</p>
                                 <ul class="list-unstyled">
-                                    <li class="mb-2"><i class="bi bi-exclamation-triangle text-warning me-2"></i>از اطلاعات جعلی استفاده نکنند</li>
-                                    <li class="mb-2"><i class="bi bi-exclamation-triangle text-warning me-2"></i>سیستم را مختل نکنند</li>
-                                    <li class="mb-2"><i class="bi bi-exclamation-triangle text-warning me-2"></i>از محتوای غیرقانونی استفاده نکنند</li>
-                                    <li class="mb-2"><i class="bi bi-exclamation-triangle text-warning me-2"></i>حقوق مالکیت معنوی را رعایت کنند</li>
+                                    <li class="mb-2"><i class="bi bi-exclamation-triangle text-warning me-2"></i>{% if lang == 'en' %}Not use false information{% else %}از اطلاعات جعلی استفاده نکنند{% endif %}</li>
+                                    <li class="mb-2"><i class="bi bi-exclamation-triangle text-warning me-2"></i>{% if lang == 'en' %}Not disrupt the system{% else %}سیستم را مختل نکنند{% endif %}</li>
+                                    <li class="mb-2"><i class="bi bi-exclamation-triangle text-warning me-2"></i>{% if lang == 'en' %}Not use illegal content{% else %}از محتوای غیرقانونی استفاده نکنند{% endif %}</li>
+                                    <li class="mb-2"><i class="bi bi-exclamation-triangle text-warning me-2"></i>{% if lang == 'en' %}Respect intellectual property rights{% else %}حقوق مالکیت معنوی را رعایت کنند{% endif %}</li>
                                 </ul>
                             </div>
                         </section>
 
                         <section class="mb-5">
                             <h4 class="fw-bold text-primary mb-3">
-                                <i class="bi bi-6-circle me-2"></i>تغییرات
+                                <i class="bi bi-6-circle me-2"></i>{% if lang == 'en' %}Changes{% else %}تغییرات{% endif %}
                             </h4>
                             <p class="text-muted lh-lg">
-                                ما حق تغییر این قوانین را در هر زمان محفوظ می‌داریم. تغییرات از طریق وب‌سایت 
+                                {% if lang == 'en' %}
+                                We reserve the right to change these terms at any time. Changes will be notified through the website and continued use of services implies acceptance of changes.
+                                {% else %}
+                                ما حق تغییر این قوانین را در هر زمان محفوظ می‌داریم. تغییرات از طریق وب‌سایت
                                 اطلاع‌رسانی خواهد شد و ادامه استفاده از خدمات به معنای قبول تغییرات است.
+                                {% endif %}
                             </p>
                         </section>
 
-                        <section class="mb-5">
-                            <h4 class="fw-bold text-primary mb-3">
-                                <i class="bi bi-telephone me-2"></i>تماس با ما
-                            </h4>
-                            <div class="bg-light p-4 rounded">
-                                <p class="mb-2">
-                                    <i class="bi bi-envelope me-2 text-primary"></i>
-                                    <strong>ایمیل:</strong> digikala@gmail.com
-                                </p>
-                                <p class="mb-2">
-                                    <i class="bi bi-telephone me-2 text-primary"></i>
-                                    <strong>تلفن:</strong> ۱۲۳۴۵۶۷۸-۰۲۱
-                                </p>
-                                <p class="mb-0">
-                                    <i class="bi bi-clock me-2 text-primary"></i>
-                                    <strong>ساعات کاری:</strong> شنبه تا پنج‌شنبه، ۹ صبح تا ۶ عصر
-                                </p>
-                            </div>
-                        </section>
                     </div>
-                    
+
                     <div class="text-center mt-5">
                         <a href="{% url 'home' %}" class="btn btn-primary btn-lg">
-                            <i class="bi bi-house me-2"></i>بازگشت به صفحه اصلی
+                            <i class="bi bi-house me-2"></i>{{ T.back }}
                         </a>
                     </div>
                 </div>
@@ -137,9 +121,15 @@
 
 <style>
 .terms-content section {
+    {% if lang == 'en' %}
+    border-left: 4px solid #e91e63;
+    padding-left: 1.5rem;
+    margin-left: 1rem;
+    {% else %}
     border-right: 4px solid #e91e63;
     padding-right: 1.5rem;
     margin-right: 1rem;
+    {% endif %}
 }
 
 .terms-content h4 {
@@ -149,17 +139,6 @@
 
 .terms-content ul li {
     padding: 0.25rem 0;
-}
-
-@media (max-width: 768px) {
-    .terms-content section {
-        border-right: none;
-        border-bottom: 4px solid #e91e63;
-        padding-right: 0;
-        padding-bottom: 1rem;
-        margin-right: 0;
-        margin-bottom: 1rem;
-    }
 }
 </style>
 
