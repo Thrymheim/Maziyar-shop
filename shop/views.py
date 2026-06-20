@@ -329,6 +329,7 @@ def admin_dashboard(request):
 def admin_product_add(request):
     categories = Category.objects.all()
     if request.method == 'POST':
+        sale_price = request.POST.get('sale_price', '') or '0'
         product = Product(
             name=request.POST['name'],
             discription=request.POST['discription'],
@@ -336,7 +337,7 @@ def admin_product_add(request):
             category_id=request.POST['category'],
             star=request.POST.get('star', 0),
             is_sale='is_sale' in request.POST,
-            sale_price=request.POST.get('sale_price', 0),
+            sale_price=sale_price,
         )
         if request.FILES.get('picture'):
             product.picture = request.FILES['picture']
@@ -357,7 +358,7 @@ def admin_product_edit(request, pk):
         product.category_id = request.POST['category']
         product.star = request.POST.get('star', 0)
         product.is_sale = 'is_sale' in request.POST
-        product.sale_price = request.POST.get('sale_price', 0)
+        product.sale_price = request.POST.get('sale_price', '') or '0'
         if request.FILES.get('picture'):
             product.picture = request.FILES['picture']
         product.save()
