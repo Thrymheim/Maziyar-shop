@@ -144,16 +144,13 @@
                                         <h6 class="card-title fw-bold mb-2">{{ item.name }}</h6>
 
                                         <div class="star-container justify-content-center small text-warning mb-3">
-                                            {% with ''|center:item.star as range %}
-                                                {% for _ in range %}
+                                            {% for i in "12345" %}
+                                                {% if forloop.counter <= item.star %}
                                                     <i class="bi bi-star-fill"></i>
-                                                {% endfor %}
-                                            {% endwith %}
-                                            {% if item.star < 5 %}
-                                                {% for _ in "12345"|slice:item.star %}
+                                                {% else %}
                                                     <i class="bi bi-star"></i>
-                                                {% endfor %}
-                                            {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
                                         </div>
 
                                         <div class="text-center mb-3">
