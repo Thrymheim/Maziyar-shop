@@ -82,9 +82,9 @@
             <h5 class="mb-0"><i class="bi bi-chat-dots me-2"></i>{{ T.comments }} ({{ comments|length }})</h5>
         </div>
         <div class="card-body">
-            <!-- Add Comment Form -->
-            {% if user.is_authenticated %}
-                <div class="card bg-light mb-4">
+            <!-- Add Comment Form (only if not yet commented) -->
+            {% if user.is_authenticated and not user_comment %}
+                <div class="card bg-light mb-4" id="comment-form-card">
                     <div class="card-body">
                         <h6 class="mb-3">{{ T.write_comment }}:</h6>
                         <form id="comment-form">
@@ -108,6 +108,36 @@
                             </button>
                         </form>
                         <div id="comment-message" class="mt-3" style="display:none;"></div>
+                    </div>
+                </div>
+            {% elif user.is_authenticated and user_comment %}
+                <!-- Edit Comment Form -->
+                <div class="card bg-light mb-4" id="comment-form-card" style="display:none;">
+                    <div class="card-body">
+                        <h6 class="mb-3">{{ T.edit_comment }}:</h6>
+                        <form id="edit-comment-form" method="POST" action="{% url 'edit_comment' user_comment.id %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label class="form-label">{{ T.your_rating }}</label>
+                                <div class="rating-input d-flex gap-1">
+                                    {% for i in "12345" %}
+                                        <button type="button" class="btn btn-outline-warning rating-btn-edit {% if forloop.counter <= user_comment.rating %}btn-warning{% endif %}" data-rating="{{ forloop.counter }}">
+                                            <i class="bi bi-star-fill"></i>
+                                        </button>
+                                    {% endfor %}
+                                </div>
+                                <input type="hidden" name="rating" id="edit-rating-value" value="{{ user_comment.rating }}">
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" name="body" rows="3" required>{{ user_comment.body }}</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-lg me-1"></i>{{ T.save_changes }}
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="document.getElementById('comment-form-card').style.display='none';">
+                                {{ T.cancel }}
+                            </button>
+                        </form>
                     </div>
                 </div>
             {% else %}
@@ -136,11 +166,11 @@
                             </div>
                             <div class="d-flex align-items-center gap-2">
                                 {% if comment.user == user %}
-                                    <a href="{% url 'edit_comment' comment.id %}" class="btn btn-outline-primary btn-sm py-0 px-1">
+                                    <button class="btn btn-outline-primary btn-sm py-0 px-1" onclick="showEditForm()">
                                         <i class="bi bi-pencil"></i>
-                                    </a>
+                                    </button>
                                     <a href="{% url 'delete_comment' comment.id %}" class="btn btn-outline-danger btn-sm py-0 px-1"
-                                       onclick="return confirm('{% if lang == "en" %}Delete this comment?{% else %}آیا از حذف نظر مطمئن هستید؟{% endif %}')">
+                                       onclick="return confirm('{% if lang == 'en' %}Delete this comment?{% else %}آیا از حذف نظر مطمئن هستید؟{% endif %}')">
                                         <i class="bi bi-trash"></i>
                                     </a>
                                 {% endif %}
@@ -200,7 +230,7 @@ $('#comment-form').on('submit', function(e) {
     const rating = $('#rating-value').val();
 
     if (!body) {
-        alert('متن نظر را وارد کنید!');
+        alert('{% if lang == "en" %}Please enter a comment!{% else %}متن نظر را وارد کنید!{% endif %}');
         return;
     }
 
@@ -219,9 +249,25 @@ $('#comment-form').on('submit', function(e) {
         },
         error: function(xhr) {
             const data = xhr.responseJSON;
-            alert(data ? data.error : 'خطایی رخ داد!');
+            alert(data ? data.error : '{% if lang == "en" %}An error occurred!{% else %}خطایی رخ داد!{% endif %}');
         }
     });
+});
+
+// Edit form
+function showEditForm() {
+    document.getElementById('comment-form-card').style.display = 'block';
+    document.getElementById('comment-form-card').scrollIntoView({behavior: 'smooth'});
+}
+
+// Edit rating buttons
+$('.rating-btn-edit').on('click', function() {
+    const rating = $(this).data('rating');
+    $('#edit-rating-value').val(rating);
+    $('.rating-btn-edit').removeClass('btn-warning').addClass('btn-outline-warning');
+    $(this).removeClass('btn-outline-warning').addClass('btn-warning');
+    $(this).prevAll('.rating-btn-edit').removeClass('btn-outline-warning').addClass('btn-warning');
+});
 });
 </script>
 {% endblock %}

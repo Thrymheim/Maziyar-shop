@@ -195,7 +195,10 @@ def signup_user(request):
 def product(request, pk): 
     product = get_object_or_404(Product, id=pk)
     comments = product.comment_set.filter(is_active=True)
-    return render(request , 'product.html' , {'product' : product, 'comments': comments})
+    user_comment = None
+    if request.user.is_authenticated:
+        user_comment = Comment.objects.filter(product=product, user=request.user).first()
+    return render(request , 'product.html' , {'product' : product, 'comments': comments, 'user_comment': user_comment})
 
 
 @login_required(login_url='login')
