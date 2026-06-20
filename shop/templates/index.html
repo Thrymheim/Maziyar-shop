@@ -144,13 +144,15 @@
                                         <h6 class="card-title fw-bold mb-2">{{ item.name }}</h6>
 
                                         <div class="star-container justify-content-center small text-warning mb-3">
+                                            {% with avg=item.get_average_rating %}
                                             {% for i in "12345" %}
-                                                {% if forloop.counter <= item.star %}
+                                                {% if forloop.counter <= avg %}
                                                     <i class="bi bi-star-fill"></i>
                                                 {% else %}
                                                     <i class="bi bi-star"></i>
                                                 {% endif %}
                                             {% endfor %}
+                                            {% endwith %}
                                         </div>
 
                                         <div class="text-center mb-3">
