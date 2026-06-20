@@ -186,6 +186,8 @@ TRANSLATIONS = {
         'all': 'همه',
         'stars': 'ستاره',
         'and_above': 'و بالاتر',
+        'comment_edited': 'نظر ویرایش شد!',
+        'comment_deleted': 'نظر حذف شد!',
     },
     'en': {
         # Navigation
@@ -374,6 +376,8 @@ TRANSLATIONS = {
         'all': 'All',
         'stars': 'Stars',
         'and_above': '& Up',
+        'comment_edited': 'Comment updated!',
+        'comment_deleted': 'Comment deleted!',
     }
 }
 

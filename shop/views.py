@@ -228,7 +228,7 @@ def edit_comment(request, pk):
         comment.rating = int(request.POST.get('rating', comment.rating))
         comment.body = request.POST.get('body', comment.body).strip()
         comment.save()
-        messages.success(request, 'Comment updated!')
+        messages.success(request, get_msg(request, 'comment_edited'))
     return redirect('product', pk=comment.product.id)
 
 
@@ -237,7 +237,7 @@ def delete_comment(request, pk):
     comment = get_object_or_404(Comment, id=pk, user=request.user)
     product_id = comment.product.id
     comment.delete()
-    messages.success(request, 'Comment deleted!')
+    messages.success(request, get_msg(request, 'comment_deleted'))
     return redirect('product', pk=product_id)
 
 
