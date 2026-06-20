@@ -195,10 +195,7 @@ def signup_user(request):
 def product(request, pk): 
     product = get_object_or_404(Product, id=pk)
     comments = product.comment_set.filter(is_active=True)
-    user_comment = None
-    if request.user.is_authenticated:
-        user_comment = Comment.objects.filter(product=product, user=request.user).first()
-    return render(request , 'product.html' , {'product' : product, 'comments': comments, 'user_comment': user_comment})
+    return render(request , 'product.html' , {'product' : product, 'comments': comments})
 
 
 @login_required(login_url='login')
@@ -222,26 +219,6 @@ def add_comment(request, pk):
         )
         return JsonResponse({'success': True, 'message': 'OK'})
     return JsonResponse({'success': False, 'error': 'Invalid'}, status=400)
-
-
-@login_required(login_url='login')
-def edit_comment(request, pk):
-    comment = get_object_or_404(Comment, id=pk, user=request.user)
-    if request.method == 'POST':
-        comment.rating = int(request.POST.get('rating', comment.rating))
-        comment.body = request.POST.get('body', comment.body).strip()
-        comment.save()
-        messages.success(request, get_msg(request, 'comment_edited'))
-    return redirect('product', pk=comment.product.id)
-
-
-@login_required(login_url='login')
-def delete_comment(request, pk):
-    comment = get_object_or_404(Comment, id=pk, user=request.user)
-    product_id = comment.product.id
-    comment.delete()
-    messages.success(request, get_msg(request, 'comment_deleted'))
-    return redirect('product', pk=product_id)
 
 
 @login_required(login_url='login')
