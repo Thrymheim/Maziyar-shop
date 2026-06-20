@@ -120,7 +120,7 @@
             <!-- Comments List -->
             <div id="comments-list">
                 {% for comment in comments %}
-                    <div class="border-bottom pb-3 mb-3">
+                    <div class="border-bottom pb-3 mb-3" id="comment-{{ comment.id }}">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <div>
                                 <strong>{{ comment.user.first_name|default:comment.user.username }}</strong>
@@ -134,7 +134,18 @@
                                     {% endfor %}
                                 </span>
                             </div>
-                            <small class="text-muted">{{ comment.created_at|date:"Y/m/d H:i" }}</small>
+                            <div class="d-flex align-items-center gap-2">
+                                {% if comment.user == user %}
+                                    <a href="{% url 'edit_comment' comment.id %}" class="btn btn-outline-primary btn-sm py-0 px-1">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a href="{% url 'delete_comment' comment.id %}" class="btn btn-outline-danger btn-sm py-0 px-1"
+                                       onclick="return confirm('{% if lang == "en" %}Delete this comment?{% else %}آیا از حذف نظر مطمئن هستید؟{% endif %}')">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                {% endif %}
+                                <small class="text-muted">{{ comment.created_at|date:"Y/m/d H:i" }}</small>
+                            </div>
                         </div>
                         <p class="mb-0">{{ comment.body }}</p>
                     </div>

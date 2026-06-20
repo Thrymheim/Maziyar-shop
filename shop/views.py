@@ -206,10 +206,10 @@ def add_comment(request, pk):
         body = request.POST.get('body', '').strip()
 
         if not body:
-            return JsonResponse({'success': False, 'error': 'متن نظر را وارد کنید'}, status=400)
+            return JsonResponse({'success': False, 'error': get_msg(request, 'fill_fields')}, status=400)
 
         if Comment.objects.filter(product=product, user=request.user).exists():
-            return JsonResponse({'success': False, 'error': 'شما قبلاً برای این محصول نظر ثبت کرده‌اید'}, status=400)
+            return JsonResponse({'success': False, 'error': 'Already commented'}, status=400)
 
         Comment.objects.create(
             product=product,
@@ -217,8 +217,28 @@ def add_comment(request, pk):
             rating=rating,
             body=body
         )
-        return JsonResponse({'success': True, 'message': 'نظر شما با موفقیت ثبت شد!'})
-    return JsonResponse({'success': False, 'error': 'درخواست نامعتبر'}, status=400)
+        return JsonResponse({'success': True, 'message': 'OK'})
+    return JsonResponse({'success': False, 'error': 'Invalid'}, status=400)
+
+
+@login_required(login_url='login')
+def edit_comment(request, pk):
+    comment = get_object_or_404(Comment, id=pk, user=request.user)
+    if request.method == 'POST':
+        comment.rating = int(request.POST.get('rating', comment.rating))
+        comment.body = request.POST.get('body', comment.body).strip()
+        comment.save()
+        messages.success(request, 'Comment updated!')
+    return redirect('product', pk=comment.product.id)
+
+
+@login_required(login_url='login')
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, id=pk, user=request.user)
+    product_id = comment.product.id
+    comment.delete()
+    messages.success(request, 'Comment deleted!')
+    return redirect('product', pk=product_id)
 
 
 @login_required(login_url='login')
